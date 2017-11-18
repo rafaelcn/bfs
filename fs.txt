@@ -1,0 +1,11 @@
+Arquivos e Programas/Firefox
+Arquivos e Programas/Chrome
+Arquivos e Programas/Opera
+Meus Documetnos/apresentacao.pptx
+Meus Documentos/relatorio.txt
+Meus Documentos/fontes
+Meus Documentos/fontes/main.c
+Meus Documentos/fontes/main.h
+Meus Documentos/imagens
+Meus Downloads/7zip.exe
+Meus Downloads/t2.tar
