@@ -30,20 +30,20 @@ elseif (UNIX)
   endif()
 endif()
 
-set (SRC main.c
-  macros.h
-  cmdline.c
-  cmdline.h
-  fparser.c
-  fparser.h
-  bfs_string.c
-  bfs_string.h
-  bfs_node.c
-  bfs_node.h
-  bfs_tree.c
-  bfs_tree.h
-  bfs.c
-  bfs.h
+set (SRC src/main.c
+  src/macros.h
+  src/cmdline.c
+  src/cmdline.h
+  src/fparser.c
+  src/fparser.h
+  src/bfs_string.c
+  src/bfs_string.h
+  src/bfs_node.c
+  src/bfs_node.h
+  src/bfs_tree.c
+  src/bfs_tree.h
+  src/bfs.c
+  src/bfs.h
   )
 
 add_executable(${EXEC_NAME} ${SRC})
