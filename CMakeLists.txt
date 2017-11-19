@@ -42,6 +42,8 @@ set (SRC src/main.c
   src/bfs_node.h
   src/bfs_tree.c
   src/bfs_tree.h
+  src/bfs_errors.c
+  src/bfs_errors.h
   src/bfs.c
   src/bfs.h
   )
