@@ -27,11 +27,47 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct filesystem Filesystem;
 
+/**
+ * @brief Holds everything that BFS needs to work properly.
+ */
+struct bfs_fs {
+    char *bfs_root_path;
+    struct bfs_tree *bfs_fs;
+};
+
+
+/**
+ * The BFS graph can only support a depth of 15 levels with at least
+ * paths/files with 64 characters.
+ */
+
+// Name of the root path under BFS.
+#define BFS_ROOT_PATH "BFS"
+// Paths on BFS are limited to 1024 characters.
+#define BFS_PATH_SIZE 1024
+// Path/File names have a maximum of 64 characters.
+#define BFS_MAX_NAME_LENGTH 64
+// Determines how many sub nodes can exist on a given node.
+#define BFS_MAX_NODES 20
+
+
+/**
+ * @brief
+ */
 void bfs_init();
 
-void bfs_load(FILE* virtual_filesystem);
 
+/**
+ * @brief
+ * @param fs
+ */
+int bfs_load(FILE *fs);
+
+/**
+ * @brief
+ * @param fs
+ */
+int  bfs_close(FILE *fs);
 
 #endif // BFS_H

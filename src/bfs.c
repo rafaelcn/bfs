@@ -22,19 +22,22 @@
  */
 
 #include "bfs.h"
-
-/**
- *
- */
-struct bfs {
-    FILE* fs;
-
-};
+#include "bfs_string.h"
+#include "bfs_fparser.h"
 
 void bfs_init() {
-    // inits the BFS and its bfs_node_tree.
+    // inits the BFS filesystem.
 }
 
-void bfs_load(FILE* virtual_filesystem) {
+int bfs_load(FILE* vfs) {
 
+    char **path_list = bfs_fparse(vfs);
+
+    
+
+    return 0;
+}
+
+int bfs_close(FILE *fs) {
+    return fclose(fs);
 }
