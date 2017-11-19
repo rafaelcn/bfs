@@ -23,6 +23,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <errno.h>
 #include <string.h>
 
 #include "cmdline.h"
@@ -32,31 +33,36 @@
 int main(int argc, char **argv) {
 
     FILE *fs = NULL;
+    char *fn = "fs.txt";
 
     if (argc > 1) {
-        char *fn = argv[1];
+        fn = argv[1];
 
         if (bfs_strncmpl(fn, ".txt", 3) == 1) {
             fprintf(stderr, "VFS describe file has to have a .txt extension");
             return 1;
         }
-
-        fs = fopen(fn, "r");
-    } else {
-        fs = fopen("fs.txt", "r");
     }
+
+    fs = fopen(fn, "r");
 
     if (fs == NULL) {
-        return 1;
+        char err[255];
+        sprintf(err, "Failed to read file %s", fn);
+        perror(err);
+
+        exit(EXIT_FAILURE);
     }
 
+    // Initializes the structure of the filesystem.
     bfs_init();
-
     // Load filesystem into memory.
     // Current layout of the filesystem is still being discussed.
     bfs_load(fs);
 
     cmdline_start();
 
-    return 0;
+    bfs_close(fs);
+
+    return EXIT_SUCCESS;
 }
