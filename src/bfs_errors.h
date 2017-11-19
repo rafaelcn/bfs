@@ -27,12 +27,17 @@
 #include <stdio.h>
 
 // The maximum size of an error message.
-#define BFS_ERROR_MESSAGE_MAX 512
+#define BFS_MAX_ERROR_LENGTH 512
 
 // List of possible ~errors~ and their numerical correspondents.
-#define BFS_LOG 0x00
-#define BFS_CRITICAL 0x1
-#define BFS_WARNING  0x2
+#define BFS_LOG        0x00
+#define BFS_CRITICAL   0x01
+#define BFS_WARNING    0x02
+
+#define BFS_STR_LOG     0x10
+#define BFS_STR_ERROR   0x11
+#define BFS_STR_WARNING 0X12
+
 
 
 void bfs_pferror(FILE *stream, const char *s, int line, char *file, int errc);
