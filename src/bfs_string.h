@@ -24,11 +24,24 @@
 #ifndef BFS_STRING_H
 #define BFS_STRING_H
 
+#include <wchar.h>
+
 /**
  * @brief
+ * @param s
+ * @param s_
  */
 int bfs_strcmpl(const char *restrict s, const char *restrict s_);
 
+/**
+ *
+ */
 int bfs_strncmpl(const char *restrict s, const char *restrict s_, int n);
+
+/**
+ *
+ */
+char *bfs_strsplit(const char *restrict s, const char *restrict delim, int i);
+
 
 #endif// BFS_STRING_H
