@@ -25,6 +25,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "bfs_errors.h"
 #include "cmdline.h"
 
 #define newline printf("\n");
@@ -50,14 +51,13 @@ void cmdline_start() {
         // valid or not. I think it can be done with the search function.
 
         if(strncmp(option,"cd",2) == 0) {
-            newline
-
             if(option[3] == '\0'){
-                printf("Given directory is invalid.\n");
-                printf("USAGE: cd <dir>");
+                bfs_pferror(stderr, "Given directory is invalid", __LINE__,
+                    __FILE__, BFS_WARNING);
                 newline
             }
             else {
+                newline
                 char dir[98];
                 int i;
                 int j = 0;
@@ -73,18 +73,18 @@ void cmdline_start() {
 
                 printf("Entered into: /%s.\n", dir);
             }
-
             newline
         }
         else if(strncmp(option,"search",5) == 0) {
-            newline
 
             if(option[7] == '\0') {
-                printf("Given argument is invalid.\n");
-                printf("USAGE: search <arg>");
+                bfs_pferror(stderr, "Given argument is invalid", __LINE__,
+                    __FILE__, BFS_WARNING);
                 newline
             }
             else {
+                newline
+
                 char arg[94];
                 int i;
                 int j = 0;
@@ -103,14 +103,14 @@ void cmdline_start() {
             newline
         }
         else if(strncmp(option,"rm",2) == 0) {
-            newline 
-
             if(option[3] == '\0') {
-                printf("Given directory is invalid.\n");
-                printf("USAGE: rm <dir>");
+                bfs_pferror(stderr, "Given directory is invalid", __LINE__,
+                    __FILE__, BFS_WARNING);
                 newline
             }
             else {
+                newline
+
                 char dir[97];
                 int i;
                 int j = 0;
@@ -137,14 +137,13 @@ void cmdline_start() {
             newline
         }
         else if(strncmp(option,"mkdir",5) == 0) {
-            newline
-
             if(option[6] == '\0') {
-                printf("Given argument is invalid.\n");
-                printf("USAGE: mkdir <arg>");
+                bfs_pferror(stderr, "Given argument is invalid", __LINE__,
+                    __FILE__, BFS_WARNING);
                 newline
             }
             else {
+                newline
                 char arg[94];
                 int i;
                 int j = 0;
