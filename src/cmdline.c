@@ -2,7 +2,7 @@
  *                Universidade Tecnológica Federal do Paraná
  *
  * Copyright (c) 2017 Rafael Nunes <rafaelnunes@engineer.com>
- * Copyright (c) 2017 Mikael Messias
+ * Copyright (c) 2017 Mikael Messias <mikaelmessias@outlook.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to
@@ -21,8 +21,185 @@
  *
  */
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 #include "cmdline.h"
 
-void cmdline_start() {
+#define newline printf("\n");
 
+void cmdline_start() {    
+    printf("BFS - Branch Filesystem 0.0.1\n");
+    printf("Copyright © 2017 UTFPR SH\n");
+    printf("License: MIT License <https://opensource.org/licenses/MIT> \n");
+    printf("This is a free open-source software.\n");
+    printf("THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND.\n");
+    printf("\nType \"help\" to see the available commands.\n");
+    newline
+
+    // BFS_Tree *btree = root;
+
+    while(1) {
+        char option[100];
+
+        printf(">>> ");
+        fgets(option, 100, stdin);
+        
+        // TODO: Some of the options needs to verify whether the directory is
+        // valid or not. I think it can be done with the search function.
+
+        if(strncmp(option,"cd",2) == 0) {
+            newline
+
+            if(option[3] == '\0'){
+                printf("Given directory is invalid.\n");
+                printf("USAGE: cd <dir>");
+                newline
+            }
+            else {
+                char dir[98];
+                int i;
+                int j = 0;
+
+                for(i = 3; i < 100; i++) {
+                    if(option[i] != '\n'){
+                        dir[j] = option[i];
+                        j++;
+                    }
+                }
+
+                // btree = bfs_tree_get_dir(btree, dir);
+
+                printf("Entered into: /%s.\n", dir);
+            }
+
+            newline
+        }
+        else if(strncmp(option,"search",5) == 0) {
+            newline
+
+            if(option[7] == '\0') {
+                printf("Given argument is invalid.\n");
+                printf("USAGE: search <arg>");
+                newline
+            }
+            else {
+                char arg[94];
+                int i;
+                int j = 0;
+
+                for(i = 7; i < 99; i++) {
+                    if(option[i] != '\n'){
+                        arg[j] = option[i];
+                        j++;
+                    }
+                }
+
+                // printf("Founded on: %s", bfs_tree_search(root,arg));
+                printf("Searching the \"%s\" file/folder.\n", arg);
+            }
+
+            newline
+        }
+        else if(strncmp(option,"rm",2) == 0) {
+            newline 
+
+            if(option[3] == '\0') {
+                printf("Given directory is invalid.\n");
+                printf("USAGE: rm <dir>");
+                newline
+            }
+            else {
+                char dir[97];
+                int i;
+                int j = 0;
+
+                for(i = 3; i < 100; i++) {
+                    if(option[i] != '\n'){
+                        dir[j] = option[i];
+                        j++;
+                    }
+                }
+
+                // bfs_tree_remove(btree,dir);
+                printf("Removing \"%s\" folder and its content.\n", dir);
+            }
+
+            newline
+        }
+        else if(strncmp(option,"list",4) == 0) {
+            newline
+
+            // bfs_tree_print(btree,arg);
+            printf("ROOT: \n");
+
+            newline
+        }
+        else if(strncmp(option,"mkdir",5) == 0) {
+            newline
+
+            if(option[6] == '\0') {
+                printf("Given argument is invalid.\n");
+                printf("USAGE: mkdir <arg>");
+                newline
+            }
+            else {
+                char arg[94];
+                int i;
+                int j = 0;
+
+                for(i = 6; i < 100; i++) {
+                    if(option[i] != '\n'){
+                        arg[j] = option[i];
+                        j++;
+                    }
+                }
+
+                // bfs_tree_insert(btree,arg);
+                printf("%s created.\n", arg);
+
+            }
+
+            newline
+        }
+        else if(strncmp(option,"clear",5) == 0) {
+            newline
+
+            #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
+                system("clear");
+            #endif
+
+            #if defined(_WIN32) || defined(_WIN64)
+                system("cls");
+            #endif
+
+            newline
+        }
+        else if(strncmp(option,"help",4) == 0) {
+            newline
+            printf("This is the Branch Filesystem command line. Usage:\n");
+            newline
+            printf("\t[option]\n\t[option] <arg>\n\t[option] <dir>\n");
+            newline
+            printf("Available options:");
+            newline
+            printf("\n - cd <dir>\t\tChange the command line working\
+            \n\t\t\tdirectory.");
+            printf("\n - search <arg>\t\tSearches for a file or folder whose\
+            \n\t\t\tname is the same as the given argument.");
+            printf("\n - rm <dir>\t\tRemoves recursively a folder and its\
+            \n\t\t\tcontent.");
+            printf("\n - list\t\t\tPrints everything inside the current folder.");
+            printf("\n - mkdir <arg>\t\tCreates a new folder in the current\
+            \n\t\t\tdirectory with the given argument as the name.");
+            printf("\n - clear\t\tClears the current screen.");
+            printf("\n - help\t\t\tDisplay this help.");
+            printf("\n - exit\t\t\tQuits the BFS command line.\n");
+            newline
+        }
+        else if(strncmp(option,"exit",4) == 0) {
+            break;
+        }
+    }
 }
