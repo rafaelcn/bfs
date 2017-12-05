@@ -26,11 +26,11 @@
 
 
 void bfs_clear_screen() {
-#ifdef __unix__
+#if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
     system("clear");
-#else
+#elif defined(_WIN32) || defined(_WIN64)
     system("cls");
-#endif // __unix__
+#endif
 }
 
 #endif // BFS_SCREEN_H

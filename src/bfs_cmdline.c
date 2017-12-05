@@ -167,17 +167,7 @@ void cmdline_start() {
             newline
         }
         else if(strncmp(option,"clear",5) == 0) {
-            newline
-
-            #if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
-                system("clear");
-            #endif
-
-            #if defined(_WIN32) || defined(_WIN64)
-                system("cls");
-            #endif
-
-            newline
+            bfs_clear_screen();
         }
         else if(strncmp(option,"help",4) == 0) {
             newline
