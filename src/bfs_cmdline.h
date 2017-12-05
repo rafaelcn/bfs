@@ -21,33 +21,9 @@
  *
  */
 
-#include "bfs_errors.h"
-#include "bfs_macros.h"
+#ifndef BFS_CMDLINE_H
+#define BFS_CMDLINE_H
 
-void bfs_pferror(FILE *stream, const char *s, int line, char *file, int errc) {
+void cmdline_start();
 
-    // It is possible that the programmer may pass a string longer than
-    // defined in the header of bfs_errors, in that scenario it is
-    // definitely UB per standard definition.
-    // Should we prevent that?
-    char error[BFS_MAX_ERROR_LENGTH];
-
-    // Implement something that shows the respective errc
-
-    switch(errc) {
-    case BFS_LOG:
-        sprintf(error, "\n>>> %s | File: %s on line %d.", s, file, line);
-        break;
-    case BFS_CRITICAL:
-        sprintf(error, "\n%s>>> %s | File: %s on line %d. %s",
-                ANSI_COLOR_RED, s, file, line, ANSI_COLOR_RESET);
-        break;
-    case BFS_WARNING:
-        sprintf(error, "\n%s>>> %s | File: %s on line %d. %s",
-                ANSI_COLOR_YELLOW, s, file, line, ANSI_COLOR_RESET);
-        break;
-    }
-
-
-    fprintf(stream, error, line, file);
-}
+#endif // CMDLINE_H

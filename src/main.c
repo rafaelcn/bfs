@@ -26,9 +26,9 @@
 #include <errno.h>
 #include <string.h>
 
-#include "cmdline.h"
 #include "bfs.h"
 #include "bfs_string.h"
+#include "bfs_cmdline.h"
 
 int main(int argc, char **argv) {
 

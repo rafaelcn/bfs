@@ -10,7 +10,7 @@
  * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
- *
+
  * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
  * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
  * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -21,9 +21,16 @@
  *
  */
 
-#ifndef CMDLINE_H
-#define CMDLINE_H
+#ifndef BFS_SCREEN_H
+#define BFS_SCREEN_H
 
-void cmdline_start();
 
-#endif // CMDLINE_H
+void bfs_clear_screen() {
+#ifdef __unix__
+    system("clear");
+#else
+    system("cls");
+#endif // __unix__
+}
+
+#endif // BFS_SCREEN_H

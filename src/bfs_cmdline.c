@@ -26,11 +26,15 @@
 #include <string.h>
 
 #include "bfs_errors.h"
-#include "cmdline.h"
+#include "bfs_cmdline.h"
+#include "utils/bfs_screen.h"
+
 
 #define newline printf("\n");
 
-void cmdline_start() {    
+void cmdline_start() {
+    bfs_clear_screen();
+
     printf("BFS - Branch Filesystem 0.0.1\n");
     printf("Copyright © 2017 UTFPR SH\n");
     printf("License: MIT License <https://opensource.org/licenses/MIT> \n");
@@ -46,7 +50,7 @@ void cmdline_start() {
 
         printf(">>> ");
         fgets(option, 100, stdin);
-        
+
         // TODO: Some of the options needs to verify whether the directory is
         // valid or not. I think it can be done with the search function.
 
