@@ -1,0 +1,49 @@
+#+STARTUP: showall align
+
+#+AUTHOR: Rafael Campos Nunes \and Mikael Messias
+#+DATE: 06/12/2017
+#+TITLE: BFS - Branch Filesystem
+#+LANGUAGE: bt-br
+
+#+LATEX_HEADER: \usepackage babel[]{babel}
+#+LATEX_HEADER: \usepackage{indentfirst}
+
+* Branch Filesystem
+
+  BFS é o projeto que tem como objetivo implementar um sistema de arquivos
+virtual em uma strutura parecida como uma árvore. De fato, a estrutura da
+árvore é bem similar a uma B-Tree, embora não exatamente (no tempo de escrita
+desse /README/).
+
+* Especificações de implementação
+
+  De início, alguns limites foram impostos ao sistema de arquivos, tanto para
+demonstrar a eficiência projeto com esse tipo de limitação como também
+parametrizar o programa para fácil manipulação dos limites. Discute-se
+essas limitações nesse tópico.
+
+  Quanto ao tamanho máximo de caracteres (atualmente suporta-se caracteres
+codificados em ASCII somente) e a quantidade máxima de nós filhos por nós não
+folha:
+
+ | diretório/arquivo | caminho (path) | nós |
+ | <>                | <>             | <>  |
+ | 64                | 1024           | 20  |
+
+* Interface de comando
+
+  É possível interagir com o programa, o BFS, por uma interface utilizando um
+TTY qualquer como qualquer terminal em sistemas operacionais unix ou o prompt
+do comando em sistemas Windows.
+  Os comandos disponíveis estão listados abaixo, interessante ressaltar que
+toda documentação sobre interação entre o usuário e o BFS pode ser visualizada
+utilizando o comando /help/ dentro da CLI.
+
+| cd     | navegar no sistema de arquivos                |
+| rm     | remove uma pasta ou um arquivo                |
+| search | busca um arquivo no sistema de arquivos       |
+| list   | lista todos os arquivos dentro da pasta atual |
+| mkdir  | cria uma pasta no sistema de arquivos         |
+| clear  | limpa a CLI                                   |
+| help   | exibe ajuda sobre os comandos                 |
+| exit   | sai do programa                               |
