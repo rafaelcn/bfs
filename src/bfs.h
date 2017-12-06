@@ -43,7 +43,7 @@ struct bfs_fs {
  */
 
 // Name of the root path under BFS.
-#define BFS_ROOT_PATH "BFS"
+#define BFS_ROOT_PATH "/"
 // Paths on BFS are limited to 1024 characters.
 #define BFS_PATH_SIZE 1024
 // Path/File names have a maximum of 64 characters.

@@ -24,6 +24,18 @@
 #ifndef BFS_TREE_H
 #define BFS_TREE_H
 
+typedef struct bfs_node *BFSTree;
+typedef struct bfs_node  BFSNode;
+
+#define EMPTY_TREE (void *)0
+
+BFSTree *BFSTree_init();
+
+BFSTree *BFSTree_insert(BFSTree *root, BFSNode *n);
+
+BFSTree *BFSTree_remove(BFSTree *root, BFSNode *n);
+
+BFSNode bfs_tree_search();
 
 
-#endif // BFS_TREE_H
+#endif // BFSTREE_H

@@ -30,14 +30,35 @@
 #include "bfs.h"
 
 /**
- *
+ * A node representing a either a file of a path link to a file.
  */
 struct bfs_node {
     char     fname[BFS_MAX_NAME_LENGTH]; /* The name of the given node */
     time_t   fcreated;                   /* What time the node was created */
     time_t   fmodifed;                   /* What time the node was modified */
     uint32_t uid;                        /* The current Unique Identifier */
-    // TODO: Permission bits
+    uint32_t node_permissions;           /* Permissions for the current node */
+
+    struct bfs_node *father;
+    struct bfs_node *nodes[BFS_MAX_NODES];
 };
+
+
+/**
+ * Permission bits is just a 32 unsigned integer that contains the following
+ * structure:
+ *
+ * 00000000 00000000 00000000 00000000
+ *
+ * The first byte group from right to left identifies if it's a directory
+ * or not and can be represented by 0xFF. From that, the second byte ~nibble~
+ * represent if it is a file or not, though not necessary it is present in
+ * this project.
+ *
+ * Remaining bits would be used to identify the owner of the file inside BFS.
+ */
+
+#define BFS_NODE_IS_DIR  0xFF000000
+#define BFS_NODE_IS_FILE 0x00F00000
 
 #endif // BFS_NODE_H

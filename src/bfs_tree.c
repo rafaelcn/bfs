@@ -21,4 +21,23 @@
  *
  */
 
+#include <time.h>
+
 #include "bfs_tree.h"
+#include "bfs_node.h"
+
+BFSTree *bfs_tree_init() {
+
+}
+
+BFSTree *bfs_tree_insert(BFSTree *root, BFSNode *n) {
+
+}
+
+BFSTree *bfs_tree_remove(BFSTree *root, BFSNode *n) {
+
+}
+
+BFSNode bfs_tree_search() {
+
+}
