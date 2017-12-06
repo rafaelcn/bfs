@@ -24,6 +24,9 @@
 #ifndef BFS_TREE_H
 #define BFS_TREE_H
 
+#include "bfs.h"
+#include "bfs_node.h"
+
 typedef struct bfs_node *BFSTree;
 typedef struct bfs_node  BFSNode;
 
@@ -35,7 +38,7 @@ BFSTree *BFSTree_insert(BFSTree *root, BFSNode *n);
 
 BFSTree *BFSTree_remove(BFSTree *root, BFSNode *n);
 
-BFSNode bfs_tree_search();
+BFSNode bfs_tree_search(char fname[BFS_MAX_NAME_LENGTH]);
 
 
 #endif // BFSTREE_H

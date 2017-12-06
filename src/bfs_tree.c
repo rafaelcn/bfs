@@ -24,7 +24,6 @@
 #include <time.h>
 
 #include "bfs_tree.h"
-#include "bfs_node.h"
 
 BFSTree *bfs_tree_init() {
 
@@ -38,6 +37,6 @@ BFSTree *bfs_tree_remove(BFSTree *root, BFSNode *n) {
 
 }
 
-BFSNode bfs_tree_search() {
+BFSNode bfs_tree_search(char fname[BFS_MAX_NAME_LENGTH]) {
 
 }
