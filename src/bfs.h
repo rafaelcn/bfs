@@ -33,7 +33,7 @@
  */
 struct bfs_fs {
     char *bfs_root_path;
-    struct bfs_tree *bfs_fs;
+    struct bfs_node **bfs_fs;
 };
 
 
