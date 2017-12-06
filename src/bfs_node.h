@@ -37,7 +37,7 @@ struct bfs_node {
     time_t   fcreated;                   /* What time the node was created */
     time_t   fmodifed;                   /* What time the node was modified */
     uint32_t uid;                        /* The current Unique Identifier */
-    uint32_t node_permissions;           /* Permissions for the current node */
+    uint32_t fpermissions;           /* Permissions for the current node */
 
     struct bfs_node *father;
     struct bfs_node *nodes[BFS_MAX_NODES];
