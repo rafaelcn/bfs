@@ -50,4 +50,13 @@ int bfs_strncmpl(const char *restrict s, const char *restrict s_, int n);
 char *bfs_strsplit(const char *restrict s, const char *restrict delim, int i);
 
 
+/**
+ * @brief Searches for the first c character inside the string s.
+ * @param s The string used to search the character.
+ * @param c The character to be searched in the string
+ * @returns An integer representing the position of the first character c in
+ * the string s or, -1 if the character c could not be found.
+ */
+int bfs_strchr(const char *s, const char c);
+
 #endif// BFS_STRING_H

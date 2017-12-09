@@ -104,3 +104,16 @@ char *bfs_strsplit(const char *restrict s, const char *restrict delim,
 
     return token;
 }
+
+int bfs_strchr(const char *s, const char c) {
+    unsigned int i = 0;
+
+    while (i < strlen(s)) {
+        if (s[i] == c) {
+            return i;
+        }
+        i++;
+    }
+
+    return -1;
+}
