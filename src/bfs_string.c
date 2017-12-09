@@ -49,63 +49,57 @@ int bfs_strncmpl(const char *restrict s, const char *restrict s_, int n) {
     return 0;
 }
 
-char *bfs_strsplit(const char *restrict s, const char *restrict delim, int i) {
+char *bfs_strsplit(const char *restrict s, const char *restrict delim,
+                   int pos) {
 
     char *token = NULL;
     size_t ssize = strlen(s);
 
-
-    if (i < 0) {
+    if (pos <= 0 || pos > (int)ssize) {
         bfs_pferror(stderr, "Given index is out of bounds", __LINE__,
                     __FILE__, BFS_STR_ERROR);
         return "";
-    } else if (i == 0 && strlen(delim) == 1) {
-        if (s != NULL && ssize > 0) {
-            int pos_delim = 0;
-
-            while (s[pos_delim] != delim[0]) {
-                pos_delim++;
-            }
-
-            token = malloc(pos_delim);
-
-            for (int idx = 0; idx < pos_delim; idx++) {
-                token[idx] = s[idx];
-            }
-
-            return token;
-        }
-
-        bfs_pferror(stderr, "char *s given is either null or empty",
-                    __LINE__, __FILE__, BFS_STR_ERROR);
-        return "";
-
-    } else if (i == 0) {
-        const char *p = strstr(s, delim);
-
-        if (p == NULL) {
-            char log[BFS_MAX_ERROR_LENGTH];
-            sprintf(log, "Couldn't find %s in %s", delim, s);
-            bfs_pferror(stderr, log, __LINE__, __FILE__, BFS_STR_LOG);
-            return "";
-        }
-
-        // It is nice to have a look at the documentation for strstr to
-        // have a fully understanding of what I am doing here.
-        for (unsigned long idx = p-s; idx <= p-s+strlen(delim); idx++) {
-            token[p-s+strlen(delim)-idx] = s[idx];
-        }
-
-        return token;
     }
 
-    token = malloc(strlen(s));
-    token = strtok((char *)s, delim);
+    //Working only with delimiters that with 1 char of size.
+    unsigned int index = 0;
+    pos -= 1;
 
-    while (i >= 0 && token) {
-        printf("\n%s", token);
-        token = strtok(NULL, delim);
-        i--;
+    if (strlen(delim) == 1) {
+        while (index < strlen(s)) {
+            if (s[index] == *delim) {
+                pos--;
+            }
+
+            // Found string to copy
+            if (pos == 0) {
+                if (s[index] == *delim) {
+                    index++;
+                }
+
+                int k = 0;
+                unsigned int ssize = 0;
+
+                while (s[index+1] != *delim) {
+                    index++;
+                    ssize++;
+                }
+
+                token = calloc(ssize, 1);
+
+                index -= ssize;
+
+                while (s[index] != *delim && index != index+ssize) {
+                    token[k] = s[index];
+
+                    index++;
+                    k++;
+                }
+                break;
+            }
+
+            index++;
+        }
     }
 
     return token;

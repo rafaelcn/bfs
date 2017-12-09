@@ -34,12 +34,18 @@
 int bfs_strcmpl(const char *restrict s, const char *restrict s_);
 
 /**
- *
+ * @brief Compares n chars from the back of the string.
+ * @param s The first string to use in the comparison.
+ * @param s_ The second string to use in the comparison.
+ * @param n How many characters to compare both strings.
  */
 int bfs_strncmpl(const char *restrict s, const char *restrict s_, int n);
 
 /**
- *
+ * @brief Splits a string s by a delimiter and returns the i-th string.
+ * @param s The string to be split.
+ * @param delim The delimiter used to split the string.
+ * @param i The i-th token in the string s.
  */
 char *bfs_strsplit(const char *restrict s, const char *restrict delim, int i);
 
