@@ -82,7 +82,7 @@ int bfs_load(FILE* vfs) {
         i++;
     }
 
-    printf("\n\n%sFile system ready.\n%s", ANSI_COLOR_GREEN,
+    printf("\n\n%sBFS ready.\n%s", ANSI_COLOR_GREEN,
            ANSI_COLOR_RESET);
 
     // Since it is already loaded, now we free the list.
