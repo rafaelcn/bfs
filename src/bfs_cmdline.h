@@ -24,6 +24,8 @@
 #ifndef BFS_CMDLINE_H
 #define BFS_CMDLINE_H
 
-void cmdline_start();
+#include "bfs_tree.h"
+
+void cmdline_start(BFSTree *root);
 
 #endif // CMDLINE_H

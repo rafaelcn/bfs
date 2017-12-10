@@ -32,7 +32,7 @@
 
 #define newline printf("\n");
 
-void cmdline_start() {
+void cmdline_start(BFSTree *root) {
     bfs_clear_screen();
 
     printf("BFS - Branch Filesystem 0.0.1\n");
@@ -43,7 +43,7 @@ void cmdline_start() {
     printf("\nType \"help\" to see the available commands.\n");
     newline
 
-    // BFS_Tree *btree = root;
+    BFSTree *btree = root;
 
     while(1) {
         char option[100];
@@ -191,7 +191,8 @@ void cmdline_start() {
             printf("\n - exit\t\t\tQuits the BFS command line.\n");
             newline
         }
-        else if(strncmp(option,"exit",4) == 0) {
+        else if(strncmp(option, "exit", 4) == 0 ||
+                strncmp(option, "quit", 4) == 0) {
             break;
         }
     }
