@@ -28,6 +28,7 @@
 #include "bfs_tree.h"
 #include "bfs_node.h"
 #include "bfs_string.h"
+#include "bfs_errors.h"
 
 uint32_t bfs_uid_index = 0;
 
@@ -48,7 +49,9 @@ BFSNode *bfs_tree_create_node(char fname[BFS_MAX_NAME_LENGTH]) {
     BFSNode *node = (BFSNode*) malloc(sizeof(BFSNode));
 
     if(node == NULL) {
-        return EMPTY_NODE;
+        bfs_pferror(stderr, "Node allocation failed", __LINE__, __FILE__,
+                    BFS_CRITICAL);
+        exit(EXIT_FAILURE);
     }
 
     else {
@@ -176,8 +179,38 @@ int bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]) {
     return 1;
 }
 
-int bfs_tree_remove(BFSTree *root, char path[BFS_PATH_SIZE]) {
+int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]) {
+    if (root == NULL) {
+        bfs_pferror(stdout, "File was not found or unable to remove",
+                    __LINE__, __FILE__, BFS_WARNING);
+        return -1;
+    }
 
+    char fmeta[BFS_MAX_NAME_LENGTH];
+    strcpy(fmeta, bfs_strsplit(path, "/", 1));
+
+
+    if (strcmp(root->child->fname, fmeta) == 0) {
+        // the node to be removed is the first child.
+        // does the child has more childs to be removed?
+        // TODO: Improve removal of the child nodes
+        free (root->child);
+    } else {
+        // the node to be removed isn't the first child.
+        BFSNode *walker = root->child;
+        while (root->child->next != NULL) {
+
+            if (strcmp(walker->fname, fmeta) == 0) {
+                break;
+            }
+
+            walker = walker->next;
+        }
+
+        free(walker);
+    }
+
+    return 0;
 }
 
 BFSNode *bfs_tree_search(BFSTree root, char path[BFS_PATH_SIZE]) {

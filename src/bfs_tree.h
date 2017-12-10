@@ -43,7 +43,7 @@ BFSNode *bfs_tree_create_path(BFSTree root, char path[BFS_PATH_SIZE]);
 
 int bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]);
 
-int bfs_tree_remove(BFSTree *root, char path[BFS_PATH_SIZE]);
+int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]);
 
 BFSNode *bfs_tree_search(BFSTree root, char path[BFS_PATH_SIZE]);
 
