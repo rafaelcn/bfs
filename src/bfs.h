@@ -32,10 +32,14 @@
  * @brief Holds everything that BFS needs to work properly.
  */
 struct bfs_fs {
-    char *bfs_root_path;
-    struct bfs_node **bfs_fs;
+    // In this version of BFS, it won't use the real FS behind it.
+    char *bfs_root_path; /* The path to the physical fs */
+    struct bfs_node **bfs_fs; /* File system holder */
 };
 
+typedef struct bfs_fs BFSStruct;
+
+BFSStruct *BFS_Global;
 
 /**
  * The BFS graph can only support a depth of 15 levels with at least
@@ -69,5 +73,10 @@ int bfs_load(FILE *fs);
  * @param fs
  */
 int  bfs_close(FILE *fs);
+
+/**
+ * @brief Count how slash there are in a path string
+ */
+unsigned int bfs_count_delim(const char *s, const char c);
 
 #endif // BFS_H

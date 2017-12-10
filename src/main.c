@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
     // Current layout of the filesystem is still being discussed.
     bfs_load(fs);
 
-    cmdline_start();
+    cmdline_start(BFS_Global->bfs_fs);
 
     bfs_close(fs);
 
