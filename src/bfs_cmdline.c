@@ -45,29 +45,29 @@ void cmdline_start(BFSTree *root) {
 
     BFSTree *btree = root;
 
-    while(1) {
-        char option[100];
+    while (1) {
+        char option[CMDLINE_READ_BUFFER];
 
         printf(">>> ");
-        fgets(option, 100, stdin);
+        fgets(option, CMDLINE_READ_BUFFER, stdin);
 
         // TODO: Some of the options needs to verify whether the directory is
         // valid or not. I think it can be done with the search function.
 
-        if(strncmp(option,"cd",2) == 0) {
-            if(option[3] == '\0'){
+        if (strncmp(option, "cd", 2) == 0) {
+            if (option[3] == '\0'){
                 bfs_pferror(stderr, "Given directory is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
                 newline
             }
             else {
                 newline
-                char dir[98];
+                char dir[CMDLINE_READ_BUFFER-2];
                 int i;
                 int j = 0;
 
-                for(i = 3; i < 100; i++) {
-                    if(option[i] != '\n'){
+                for (i = 3; i < CMDLINE_READ_BUFFER; i++) {
+                    if (option[i] != '\n'){
                         dir[j] = option[i];
                         j++;
                     }
@@ -79,9 +79,9 @@ void cmdline_start(BFSTree *root) {
             }
             newline
         }
-        else if(strncmp(option,"search",5) == 0) {
+        else if (strncmp(option, "search", 5) == 0) {
 
-            if(option[7] == '\0') {
+            if (option[7] == '\0') {
                 bfs_pferror(stderr, "Given argument is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
                 newline
@@ -89,11 +89,11 @@ void cmdline_start(BFSTree *root) {
             else {
                 newline
 
-                char arg[94];
+                char arg[CMDLINE_READ_BUFFER-5];
                 int i;
                 int j = 0;
 
-                for(i = 7; i < 99; i++) {
+                for(i = 7; i < CMDLINE_READ_BUFFER; i++) {
                     if(option[i] != '\n'){
                         arg[j] = option[i];
                         j++;
@@ -106,8 +106,8 @@ void cmdline_start(BFSTree *root) {
 
             newline
         }
-        else if(strncmp(option,"rm",2) == 0) {
-            if(option[3] == '\0') {
+        else if (strncmp(option, "rm", 2) == 0) {
+            if (option[3] == '\0') {
                 bfs_pferror(stderr, "Given directory is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
                 newline
@@ -115,12 +115,12 @@ void cmdline_start(BFSTree *root) {
             else {
                 newline
 
-                char dir[97];
+                char dir[CMDLINE_READ_BUFFER-2];
                 int i;
                 int j = 0;
 
-                for(i = 3; i < 100; i++) {
-                    if(option[i] != '\n'){
+                for (i = 3; i < CMDLINE_READ_BUFFER; i++) {
+                    if (option[i] != '\n'){
                         dir[j] = option[i];
                         j++;
                     }
@@ -132,44 +132,44 @@ void cmdline_start(BFSTree *root) {
 
             newline
         }
-        else if(strncmp(option,"list",4) == 0) {
+        else if (strncmp(option, "list", 4) == 0) {
             newline
 
             // bfs_tree_print(btree,arg);
-            printf("ROOT: \n");
+            // TODO: Print in a table way, like ls
 
             newline
         }
-        else if(strncmp(option,"mkdir",5) == 0) {
-            if(option[6] == '\0') {
+        else if (strncmp(option, "mkdir", 5) == 0) {
+            if (option[6] == '\0') {
                 bfs_pferror(stderr, "Given argument is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
                 newline
             }
             else {
                 newline
-                char arg[94];
+                char arg[CMDLINE_READ_BUFFER-6];
                 int i;
                 int j = 0;
 
-                for(i = 6; i < 100; i++) {
-                    if(option[i] != '\n'){
+                for (i = 6; i < CMDLINE_READ_BUFFER; i++) {
+                    if (option[i] != '\n'){
                         arg[j] = option[i];
                         j++;
                     }
                 }
 
                 // bfs_tree_insert(btree,arg);
-                printf("%s created.\n", arg);
+                printf("Node %s created.\n", arg);
 
             }
 
             newline
         }
-        else if(strncmp(option,"clear",5) == 0) {
+        else if (strncmp(option, "clear", 5) == 0) {
             bfs_clear_screen();
         }
-        else if(strncmp(option,"help",4) == 0) {
+        else if (strncmp(option, "help", 4) == 0) {
             newline
             printf("This is the Branch Filesystem command line. Usage:\n");
             newline
@@ -191,8 +191,8 @@ void cmdline_start(BFSTree *root) {
             printf("\n - exit\t\t\tQuits the BFS command line.\n");
             newline
         }
-        else if(strncmp(option, "exit", 4) == 0 ||
-                strncmp(option, "quit", 4) == 0) {
+        else if (strncmp(option, "exit", 4) == 0 ||
+                 strncmp(option, "quit", 4) == 0) {
             break;
         }
     }
