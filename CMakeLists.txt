@@ -34,8 +34,6 @@ set (SRC src/main.c
   src/bfs_macros.h
   src/bfs_cmdline.c
   src/bfs_cmdline.h
-  src/bfs_fparser.c
-  src/bfs_fparser.h
   src/bfs_string.c
   src/bfs_string.h
   src/bfs_node.c
