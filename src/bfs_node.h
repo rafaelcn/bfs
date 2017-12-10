@@ -40,7 +40,8 @@ struct bfs_node {
     uint32_t fpermissions;           /* Permissions for the current node */
 
     struct bfs_node *father;
-    struct bfs_node *nodes[BFS_MAX_NODES];
+    struct bfs_node *next;
+    struct bfs_node *child;
 };
 
 

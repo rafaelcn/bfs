@@ -36,11 +36,13 @@ uint32_t index = 0;
 
 BFSTree *bfs_tree_init();
 
-BFSNode bfs_tree_create_node(char fname[MAX_NAME_LENGHT]);
+BFSNode bfs_tree_create_node(char fname[BFS_MAX_NAME_LENGHT]);
 
-int bfs_tree_insert(BFSTree *root, char path[BFS_MAX_NAME_LENGTH]);
+BFSNode bfs_tree_create_path(BFSTree root, char path[BFS_PATH_SIZE]);
 
-int bfs_tree_insert(BFSTree *root, char path[BFS_MAX_NAME_LENGTH]);
+int bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]);
+
+int bfs_tree_remove(BFSTree *root, char path[BFS_PATH_SIZE]);
 
 BFSNode bfs_tree_search(BFSTree root, char fname[BFS_MAX_NAME_LENGTH]);
 
