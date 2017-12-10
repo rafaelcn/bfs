@@ -27,9 +27,9 @@
 #include <wchar.h>
 
 /**
- * @brief
- * @param s
- * @param s_
+ * @brief Compares two strings.
+ * @param s The first string to use in the comparison.
+ * @param s_ The second string to use in the comparison.
  */
 int bfs_strcmpl(const char *restrict s, const char *restrict s_);
 
