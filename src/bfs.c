@@ -105,6 +105,7 @@ unsigned int bfs_count_delim(const char *s, const char c) {
         if (s[i] == c) {
             n++;
         }
+        i++;
     }
 
     // There'is n+1 levels of a path with n slash.
