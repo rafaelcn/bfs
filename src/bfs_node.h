@@ -35,9 +35,9 @@
 struct bfs_node {
     char     fname[BFS_MAX_NAME_LENGTH]; /* The name of the given node */
     time_t   fcreated;                   /* What time the node was created */
-    time_t   fmodifed;                   /* What time the node was modified */
+    time_t   fmodified;                  /* What time the node was modified */
     uint32_t uid;                        /* The current Unique Identifier */
-    uint32_t fpermissions;           /* Permissions for the current node */
+    uint32_t fpermissions;               /* Permissions for the current node */
 
     struct bfs_node *father;
     struct bfs_node *next;
