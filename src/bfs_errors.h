@@ -38,7 +38,7 @@
 #define BFS_STR_ERROR   0x11
 #define BFS_STR_WARNING 0X12
 
-
+#define BFS_PARSER_ERROR 0x20
 
 void bfs_pferror(FILE *stream, const char *s, int line, char *file, int errc);
 
