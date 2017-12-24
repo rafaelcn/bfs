@@ -30,26 +30,106 @@
 #include "bfs_node.h"
 #include "bfs_string.h"
 #include "bfs_errors.h"
+#include "bfs_macros.h"
+
+#define newline printf("\n")
 
 uint32_t bfs_uid_index = 0;
+
+static int check_pointer(void *p) {
+    return p == NULL;
+}
 
 BFSTree *bfs_tree_init() {
     BFSTree *root = malloc(sizeof(BFSTree));
 
-    if(root == NULL) {
+    if(check_pointer(root)) {
         return EMPTY_TREE;
     }
     else {
-        *root = bfs_tree_create_node(BFS_ROOT_PATH);
+        *root = bfs_tree_create_path(BFS_ROOT_PATH);
     }
 
     return root;
 }
 
-BFSNode *bfs_tree_create_node(char fname[BFS_MAX_NAME_LENGTH]) {
+BFSTree *bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]) {
+    if(check_pointer(root)) {
+        return EMPTY_TREE;
+    }
+    else if(check_pointer(*root)) {
+        return EMPTY_NODE;
+    }    
+    
+    // 1º: verifica a quantidade de níveis
+    // 2º: percorre a árvore procurando o caminho e o cria se necessário
+    // 3º: se houver arquivo, cria e insere no caminho, porém não permite multiplos arquivos com o mesmo nome
+
+    int levels = bfs_count_delim(path, '/');
+
+    char fstring[BFS_MAX_NAME_LENGTH];
+
+    BFSNode *walker = *root;
+
+    int i;
+    for(i = 1; i <= levels; i++) {
+        strcpy(fstring, bfs_strsplit(path, "/", i));
+
+        if(bfs_tree_search_child(walker->child, fstring)) {
+            if(bfs_strchr(fstring, '.') == -1) {
+                // The path already exist, so it's not needed to create
+                
+                walker = bfs_tree_get_child(walker, fstring);
+            }
+            else {
+                bfs_pferror(stderr, "There's already a file with the same given name.", __LINE__, __FILE__,
+                            BFS_WARNING);
+            }
+        }
+        else {
+            // The path doesn't exist
+            
+            BFSNode *node;
+
+            if(walker->child != NULL) {
+                walker = walker->child;
+
+                while(walker->next != NULL) {
+                    walker = walker->next;
+                }
+
+                if(bfs_strchr(fstring, '.') == -1) {
+                    node = bfs_tree_create_path(fstring);
+                }
+                else {
+                    node = bfs_tree_create_file(fstring);
+                }
+
+                walker->next = node;
+                node->father = walker->father;
+            }
+            else {
+                if(bfs_strchr(fstring, '.') == -1) {
+                    node = bfs_tree_create_path(fstring);
+                }
+                else {
+                    node = bfs_tree_create_file(fstring);
+                }
+
+                walker->child = node;
+                node->father = walker;
+            }
+            walker = bfs_tree_get_child(walker, fstring);
+        }
+    }
+
+    return root;
+}
+
+BFSNode *bfs_tree_create_path(char fname[BFS_MAX_NAME_LENGTH]) {
     BFSNode *node = (BFSNode*) malloc(sizeof(BFSNode));
 
-    if(node == NULL) {
+    if(check_pointer(node)) {
         bfs_pferror(stderr, "Node allocation failed", __LINE__, __FILE__,
                     BFS_CRITICAL);
         exit(EXIT_FAILURE);
@@ -60,14 +140,7 @@ BFSNode *bfs_tree_create_node(char fname[BFS_MAX_NAME_LENGTH]) {
         node->fcreated = time(NULL);
         node->fmodified = time(NULL);
         node->uid = bfs_uid_index;
-
-        if(bfs_strchr(fname, '.') != -1) {
-            node->fpermissions |= BFS_NODE_IS_FILE;
-        }
-        else {
-            node->fpermissions |= BFS_NODE_IS_DIR;
-        }
-
+        node->fpermissions |= BFS_NODE_IS_DIR;
         node->father = NULL;
         node->next = NULL;
         node->child = NULL;
@@ -78,121 +151,146 @@ BFSNode *bfs_tree_create_node(char fname[BFS_MAX_NAME_LENGTH]) {
     return node;
 }
 
-BFSNode *bfs_tree_create_path(BFSTree root, char path[BFS_PATH_SIZE]) {
-    if(root == NULL) {
-        return EMPTY_NODE;
-    }
-    
-    char fname[BFS_MAX_NAME_LENGTH] = "";
-    char next_path[BFS_PATH_SIZE] = "";
+BFSNode *bfs_tree_create_file(char fname[BFS_MAX_NAME_LENGTH]) {
+    BFSNode *node = (BFSNode*) malloc(sizeof(BFSNode));
 
-    if(bfs_count_delim(path, '/') < 2) {
-        return root;
+    if(check_pointer(node)) {
+        bfs_pferror(stderr, "Node allocation failed", __LINE__, __FILE__, BFS_CRITICAL);
+        exit(EXIT_FAILURE);
     }
+
     else {
-        int j = 1;
-
-        // Get the name of directory in evidence.
-        strcat(fname, bfs_strsplit(path, "/", j));
-
-        for(j = 2; j <= bfs_count_delim(path, '/'); j++) {
-            if(j > 2 && j <= bfs_count_delim(path, '/')) {
-                // Adds slashes between strings
-                strcat(next_path, "/");            
-            }
-
-            // Starting in the 2-th string, concatenates the remain directories
-            // in the new_path string.
-            strcat(next_path, bfs_strsplit(path, "/", j));
-        }
+        strcpy(node->fname, fname);
+        node->fcreated = time(NULL);
+        node->fmodified = time(NULL);
+        node->uid = bfs_uid_index;
+        node->fpermissions |= BFS_NODE_IS_FILE;
+        node->father = NULL;
+        node->next = NULL;
+        node->child = NULL;
     }
 
-    if(root->child == NULL) {           
-        // Empty subtree
+    bfs_uid_index++;
 
-        BFSNode *node = bfs_tree_create_node(fname);
-
-        if(node == NULL) {
-            return EMPTY_NODE;
-        }
-        else {
-            // Connects the new directory to its father.
-            root->child = node;
-            node->father = root;
-
-            // Continues the search within the new directory.
-            bfs_tree_create_path(node, next_path);
-        }
-    }
-    else {
-        // Enter the subtree
-        root = root->child;
-
-        while(root->next != NULL && root->fname != fname) {
-            // Searches for a brother whose name's equal fname
-            root = root->next;
-        }
-
-        if(root->fname == fname) {
-            // Founded directory
-            bfs_tree_create_path(root, next_path);
-        }
-        else {
-            // Directory not found, it must be created first
-            BFSNode *node = bfs_tree_create_node(fname);
-
-            if(node == NULL) {
-                return EMPTY_NODE;
-            }
-            else {
-                // Connects the new directory to it's parent and left brother.
-                root->next = node;
-                node->father = root->father;
-
-                // Continues the search within the new directory.
-                bfs_tree_create_path(node, next_path);
-            }
-        }
-
-    }
+    return node;
 }
 
-int bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]) {
+int bfs_tree_search(BFSNode *root, char *s) {
+    if(check_pointer(root)) {
+        return 0;
+    }    
+    
+    if(strcmp(root->fname, s) == 0) {    
+        return 1;
+    }
+
+    return bfs_tree_search(root->child, s) + bfs_tree_search(root->next, s);
+}
+
+int bfs_tree_search_child(BFSNode *child, char *s) {
+    if(check_pointer(child)) {
+        return 0;
+    }
+
+    if(strcmp(child->fname, s) == 0) {    
+        return 1;
+    }
+    
+    return bfs_tree_search_child(child->next, s);
+}
+
+BFSNode *tmp;
+
+BFSNode *bfs_tree_get_child(BFSNode *root, char *s) {
+    if(check_pointer(root)) {
+        return EMPTY_NODE;
+    }
+    else if(strcmp(root->fname, s) == 0) {
+        tmp = root;
+    }
+    else {
+        bfs_tree_get_child(root->child, s);
+        bfs_tree_get_child(root->next, s);
+    }
+    return tmp;
+}
+
+void bfs_tree_print(BFSTree root, char *arg) {
     if(root == NULL) {
-        return 0;
+        return;
+    }
+    else if(root->child == NULL && root->fpermissions == BFS_NODE_IS_DIR) {
+        bfs_pferror(stderr, "Empty directory", __LINE__, __FILE__,
+                    BFS_WARNING);
+        newline;
+        return;
     }
 
-    int levels = bfs_count_delim(path, '/');
-
-    char fname[BFS_MAX_NAME_LENGTH];
-    strcpy(fname, bfs_strsplit(path, "/", levels));
-
-    // Returns the father of the subtree where the new node will be inserted
-    BFSNode *father = bfs_tree_create_path(*root, path);
-    BFSNode *node = bfs_tree_create_node(fname);
-
-    if (father == NULL) {
-        return 0;
-    }
-
-    if (father->child == NULL) {
-        // Empty sub-tree
-        father->child = node;
-        node->father = father;
-    } else {
-        // Walks the sub-tree and inserts the new node on the end
-
-        BFSNode *walker = father->child;
-
-        while(walker->next != NULL) {
-            walker = walker->next;
+    root = root->child;
+    
+    if(arg == NULL) {
+        newline;
+        while(root != NULL) {
+            if(root->fpermissions == BFS_NODE_IS_DIR) {
+                printf("%s%s%s    ", ANSI_COLOR_BLUE, root->fname,
+                    ANSI_COLOR_RESET);
+            }
+            else {
+                printf("%s   ", root->fname);
+            }
+            
+            root = root->next;
         }
+        newline;
+        return;
+    }
+    else if(strcmp(arg, "-i") == 0) {
+        newline;
+        printf("Type\tName\t\t\tCreated on\n\n");
 
-        walker->next = node;
-        node->father = father;
+        while(root != NULL) {
+            if(root->fpermissions == BFS_NODE_IS_DIR) {
+                printf("-d-\t%s%-20s%s\t%s", 
+                    ANSI_COLOR_BLUE, root->fname, ANSI_COLOR_RESET, 
+                    asctime(gmtime(&(root->fcreated))));
+            }
+            else {
+                printf("-f-\t%-20s\t%s", root->fname, asctime(gmtime(&(root->fcreated))));
+            }
+
+            root = root->next;
+        }
+        return;
+    }
+    else if(strcmp(arg, "-h") == 0) {
+        goto help;
+    }
+    else {
+        bfs_pferror(stderr, "Invalid argument", __LINE__, __FILE__,
+                    BFS_WARNING);
+        newline;
+        goto help;
     }
 
-    return 1;
+help:
+    printf("\nAvailable arguments:\n\n");
+    printf("    -i\tPrints file informations\n");
+    printf("    -h\tPrints this guide\n");
+    
+    return;
+}
+
+static void bfs_tree_free_nodes(BFSNode *node) {
+    if(check_pointer(node)) {
+        return;
+    }
+
+    bfs_tree_free_nodes(node->child);
+    bfs_tree_free_nodes(node->next);
+
+    free(node);
+
+    node = NULL;
 }
 
 int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]) {
@@ -203,31 +301,36 @@ int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]) {
     }
 
     char fmeta[BFS_MAX_NAME_LENGTH];
-    strcpy(fmeta, bfs_strsplit(path, "/", 1));
+    strcpy(fmeta, bfs_strsplit(path, "/", bfs_count_delim(path, '/')));
 
-
-    if (strcmp(root->child->fname, fmeta) == 0) {
-        // the node to be removed is the first child.
-        // does the child has more childs to be removed?
-        // TODO: Improve removal of the child nodes
-        free (root->child);
-    } else {
-        // the node to be removed isn't the first child.
-        BFSNode *walker = root->child;
-        while (root->child->next != NULL) {
-
-            if (strcmp(walker->fname, fmeta) == 0) {
-                break;
+    if(bfs_tree_search(root, fmeta)) {
+        BFSNode *walker = bfs_tree_get_child(root, fmeta);
+        if(walker != walker->father->child) {
+            BFSNode *prev = walker->father->child;
+            while(prev->next != walker) {
+                prev = prev->next;
             }
-
-            walker = walker->next;
+            prev->next = walker->next;
         }
-
+        else {
+            walker->father->child = walker->next;
+        }
+        bfs_tree_free_nodes(walker->child);
         free(walker);
     }
     return 0;
 }
 
-BFSNode *bfs_tree_search(BFSTree root, char path[BFS_PATH_SIZE]) {
+BFSTree *bfs_tree_free(BFSTree *root) {
+    if(check_pointer(root)) {
+        return EMPTY_TREE;
+    }
 
+    bfs_tree_free_nodes(*root);
+
+    free(root);
+
+    root = NULL;
+
+    return EMPTY_TREE;
 }
