@@ -30,22 +30,29 @@
 typedef struct bfs_node *BFSTree;
 typedef struct bfs_node  BFSNode;
 
-#define EMPTY_TREE (BFSTree *)0
-#define EMPTY_NODE (BFSNode *)0
+#define EMPTY_TREE (void *)0
+#define EMPTY_NODE (void *)0
 
 extern uint32_t bfs_uid_index;
 
 BFSTree *bfs_tree_init();
 
-BFSNode *bfs_tree_create_node(char fname[BFS_MAX_NAME_LENGTH]);
+BFSTree *bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]);
 
-BFSNode *bfs_tree_create_path(BFSTree root, char path[BFS_PATH_SIZE]);
+BFSNode *bfs_tree_create_path(char fname[BFS_MAX_NAME_LENGTH]);
 
-int bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]);
+BFSNode *bfs_tree_create_file(char fname[BFS_MAX_NAME_LENGTH]);
 
-int bfs_tree_remove(BFSTree *root, char path[BFS_PATH_SIZE]);
+int bfs_tree_search(BFSNode *root, char *s);
 
-BFSNode *bfs_tree_search(BFSTree root, char path[BFS_PATH_SIZE]);
+int bfs_tree_search_child(BFSNode *child, char *s);
 
+BFSNode *bfs_tree_get_child(BFSNode *root, char *s);
+
+int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]);
+
+void bfs_tree_print(BFSTree root, char *arg);
+
+BFSTree *bfs_tree_free(BFSTree *root);
 
 #endif // BFSTREE_H

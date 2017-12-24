@@ -25,12 +25,13 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "bfs.h"
 #include "bfs_errors.h"
+#include "bfs_string.h"
 #include "bfs_cmdline.h"
 #include "utils/bfs_screen.h"
 
-
-#define newline printf("\n");
+#define newline printf("\n")
 
 void cmdline_start(BFSTree *root) {
     bfs_clear_screen();
@@ -41,142 +42,256 @@ void cmdline_start(BFSTree *root) {
     printf("This is a free open-source software.\n");
     printf("THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND.\n");
     printf("\nType \"help\" to see the available commands.\n");
-    newline
+    newline;
 
-    BFSTree *btree = root;
+    BFSTree bfs_tree = *root;
+    char root_path[BFS_PATH_SIZE] = "";
+    
+    strcat(root_path, bfs_tree->fname);
 
-    while(1) {
-        char option[100];
+    while (1) {
+        char option[CMDLINE_READ_BUFFER];
 
-        printf(">>> ");
-        fgets(option, 100, stdin);
+        printf(">>> %s:  ", root_path);
+        
+        fgets(option, CMDLINE_READ_BUFFER, stdin);
 
-        // TODO: Some of the options needs to verify whether the directory is
-        // valid or not. I think it can be done with the search function.
-
-        if(strncmp(option,"cd",2) == 0) {
-            if(option[3] == '\0'){
-                bfs_pferror(stderr, "Given directory is invalid", __LINE__,
-                    __FILE__, BFS_WARNING);
-                newline
+        if (strncmp(option, "cd", 2) == 0) {
+            if (option[3] == '\0'){
+                bfs_tree = *root;
+                strcpy(root_path, bfs_tree->fname);
             }
             else {
-                newline
-                char dir[98];
-                int i;
+                char dir[CMDLINE_READ_BUFFER-2];
+                
+                int i = 3;
                 int j = 0;
 
-                for(i = 3; i < 100; i++) {
-                    if(option[i] != '\n'){
-                        dir[j] = option[i];
-                        j++;
+                while(option[i] != '\0') {
+                    if(option[i] == '\n') {
+                        break;
                     }
+                    dir[j] = option[i];
+                    i++;
+                    j++;
                 }
 
-                // btree = bfs_tree_get_dir(btree, dir);
+                dir[j] = '\0';
 
-                printf("Entered into: /%s.\n", dir);
+                if(strcmp(dir,"..") == 0) {
+                    if(bfs_tree->father != NULL) {
+                        bfs_tree = bfs_tree->father;
+
+                        int levels = bfs_count_delim(root_path, '/');
+                        
+                        char tmp[BFS_PATH_SIZE];
+
+                        strcpy(tmp, (*root)->fname);
+
+                        for(i = 2; i < levels; i++) {
+                            if(strcmp(tmp, "/") != 0) {
+                                strcat(tmp, "/");
+                            }
+                            strcat(tmp, bfs_strsplit(root_path, "/", i));
+                        }
+
+                        strcpy(root_path, tmp);
+                    }
+                }
+                else if(bfs_tree_search_child(bfs_tree->child, dir)) {
+                    bfs_tree = bfs_tree_get_child(bfs_tree, dir);
+
+                    if(bfs_tree->fpermissions == BFS_NODE_IS_DIR) {
+                        if(strcmp(bfs_tree->father->fname,"/") != 0) {
+                            strcat(root_path, "/");                    
+                        }
+
+                        strcat(root_path, bfs_tree->fname);
+                    }
+                    else {
+                        bfs_pferror(stderr, "Not a directory", __LINE__, __FILE__,
+                                BFS_WARNING);
+
+                        newline;
+                        bfs_tree = bfs_tree->father;
+                    }
+                }
+                else {
+                    bfs_pferror(stderr, "Couldn't find the directory", __LINE__,
+                        __FILE__, BFS_LOG);
+                    newline;
+                }
             }
-            newline
-        }
-        else if(strncmp(option,"search",5) == 0) {
 
-            if(option[7] == '\0') {
+            newline;
+        }
+        else if (strncmp(option, "search", 6) == 0) {
+            if (option[7] == '\0') {
                 bfs_pferror(stderr, "Given argument is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
-                newline
+                newline;
             }
             else {
-                newline
 
-                char arg[94];
+                char arg[CMDLINE_READ_BUFFER-5];
                 int i;
                 int j = 0;
 
-                for(i = 7; i < 99; i++) {
+                for(i = 7; i < CMDLINE_READ_BUFFER; i++) {
                     if(option[i] != '\n'){
                         arg[j] = option[i];
                         j++;
                     }
                 }
 
-                // printf("Founded on: %s", bfs_tree_search(root,arg));
-                printf("Searching the \"%s\" file/folder.\n", arg);
+                if(bfs_tree_search(bfs_tree, arg)) {
+                    newline;
+                    BFSNode *tmp = bfs_tree_get_child(bfs_tree, arg);
+                    
+                    char arg_path[BFS_MAX_NODES][BFS_MAX_NAME_LENGTH]; 
+
+                    i = 0;
+                        
+                    while(tmp->father != NULL) {
+                        strcpy(arg_path[i], tmp->fname);
+                        tmp = tmp->father;
+                        i++;
+                    }
+
+                    char p[BFS_PATH_SIZE];
+
+                    strcpy(p, "/");
+                    for(i--; i >= 0; i--) {
+                        if(strcmp(p,arg_path[i]) != 0) {
+                            strcat(p,arg_path[i]);
+                        }
+                        if(i > 0) {
+                            strcat(p, "/");                    
+                        }
+                    }
+
+                    printf("Directory: %s\n", p);
+
+                }
+                else {
+                    bfs_pferror(stderr, "Couldn't find the given argument", __LINE__,
+                        __FILE__, BFS_LOG);
+                    newline;
+                }
             }
 
-            newline
+            newline;
         }
-        else if(strncmp(option,"rm",2) == 0) {
-            if(option[3] == '\0') {
+        else if (strncmp(option, "rm", 2) == 0) {
+            if (option[3] == '\0') {
                 bfs_pferror(stderr, "Given directory is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
-                newline
+                newline;
             }
             else {
-                newline
-
-                char dir[97];
+                char dir[CMDLINE_READ_BUFFER-2];
                 int i;
                 int j = 0;
 
-                for(i = 3; i < 100; i++) {
-                    if(option[i] != '\n'){
+                for (i = 3; i < CMDLINE_READ_BUFFER; i++) {
+                    if (option[i] != '\n'){
                         dir[j] = option[i];
                         j++;
                     }
                 }
 
-                // bfs_tree_remove(btree,dir);
-                printf("Removing \"%s\" folder and its content.\n", dir);
+                bfs_tree_remove(bfs_tree, dir);
             }
 
-            newline
+            newline;
         }
-        else if(strncmp(option,"list",4) == 0) {
-            newline
+        else if(strncmp(option, "l", 1) == 0) {
+            if(strncmp(option, "list", 4) == 0) {
+                if(option[5] != '\0') {
+                    char arg[2];
+                    int i;
+                    int j = 0;
 
-            // bfs_tree_print(btree,arg);
-            printf("ROOT: \n");
+                    for (i = 5; i < 9; i++) {
+                        if (option[i] != '\n'){
+                            arg[j] = option[i];
+                            j++;
+                        }
+                    }
 
-            newline
+                    bfs_tree_print(bfs_tree, arg);
+                }
+                else {
+                    bfs_tree_print(bfs_tree, NULL);
+                }
+
+                newline;
+            }
+            else if (strncmp(option, "ls", 2) == 0) {
+                if(option[3] != '\0') {
+                    char arg[2];
+                    int i;
+                    int j = 0;
+
+                    for (i = 3; i < 7; i++) {
+                        if (option[i] != '\n'){
+                            arg[j] = option[i];
+                            j++;
+                        }
+                    }
+
+                    bfs_tree_print(bfs_tree, arg);
+                }
+                else {
+                    bfs_tree_print(bfs_tree, NULL);
+                }
+
+                newline;
+            }
         }
-        else if(strncmp(option,"mkdir",5) == 0) {
-            if(option[6] == '\0') {
+        else if (strncmp(option, "mkdir", 5) == 0) {
+            if (option[6] == '\0') {
                 bfs_pferror(stderr, "Given argument is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
-                newline
+                newline;
             }
             else {
-                newline
-                char arg[94];
+                char arg[CMDLINE_READ_BUFFER-6];
                 int i;
                 int j = 0;
 
-                for(i = 6; i < 100; i++) {
-                    if(option[i] != '\n'){
+                for (i = 6; i < CMDLINE_READ_BUFFER; i++) {
+                    if (option[i] != '\n'){
                         arg[j] = option[i];
                         j++;
                     }
                 }
 
-                // bfs_tree_insert(btree,arg);
-                printf("%s created.\n", arg);
+                arg[j] = '\0';
 
+                if(bfs_strchr(arg, '.') == -1) {  
+                    bfs_tree_insert(&bfs_tree, arg);
+                }
+                else {
+                    bfs_pferror(stderr, "mkdir command does not create files", 
+                                __LINE__, __FILE__, BFS_WARNING);
+                    newline;
+                }
             }
-
-            newline
+            
+            newline;
         }
-        else if(strncmp(option,"clear",5) == 0) {
+        else if (strncmp(option, "clear", 5) == 0) {
             bfs_clear_screen();
         }
-        else if(strncmp(option,"help",4) == 0) {
-            newline
+        else if (strncmp(option, "help", 4) == 0) {
+            newline;
             printf("This is the Branch Filesystem command line. Usage:\n");
-            newline
+            newline;
             printf("\t[option]\n\t[option] <arg>\n\t[option] <dir>\n");
-            newline
+            newline;
             printf("Available options:");
-            newline
+            newline;
             printf("\n - cd <dir>\t\tChange the command line working\
             \n\t\t\tdirectory.");
             printf("\n - search <arg>\t\tSearches for a file or folder whose\
@@ -189,11 +304,19 @@ void cmdline_start(BFSTree *root) {
             printf("\n - clear\t\tClears the current screen.");
             printf("\n - help\t\t\tDisplay this help.");
             printf("\n - exit\t\t\tQuits the BFS command line.\n");
-            newline
+            newline;
         }
-        else if(strncmp(option, "exit", 4) == 0 ||
-                strncmp(option, "quit", 4) == 0) {
+        else if (strncmp(option, "exit", 4) == 0 ||
+                 strncmp(option, "quit", 4) == 0) {
             break;
+        } else if (strncmp(option , "\n", 1) != 0) {
+            char ebuffer[BFS_MAX_ERROR_LENGTH];
+            // FIXME: Fix size of the option buffer
+            sprintf(ebuffer, "Given command \"%s\" is invalid", option);
+
+            // bfs_pferror(stderr, ebuffer, __LINE__, __FILE__, BFS_WARNING);
         }
     }
+
+    bfs_tree_free(root);
 }

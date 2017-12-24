@@ -26,6 +26,8 @@
 
 #include "bfs_tree.h"
 
+#define CMDLINE_READ_BUFFER 1050
+
 void cmdline_start(BFSTree *root);
 
 #endif // CMDLINE_H

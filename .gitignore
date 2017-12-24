@@ -57,3 +57,7 @@ CMakeFiles/
 CMakeCache.txt
 Makefile
 cmake_install.cmake
+
+# VSCode Files
+.vscode/
+
