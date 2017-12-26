@@ -28,6 +28,10 @@
 
 #define CMDLINE_READ_BUFFER 1050
 
-void cmdline_start(BFSTree *root);
+/**
+ * @brief Starts the BFS command line.
+ * @param root The BFS Tree root.
+ */
+void bfs_cmdline_start(BFSTree *root);
 
 #endif // CMDLINE_H
