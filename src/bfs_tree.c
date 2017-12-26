@@ -294,7 +294,7 @@ static void bfs_tree_free_nodes(BFSNode *node) {
 
 int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]) {
     if (root == NULL) {
-        bfs_pferror(stdout, "File was not found or unable to remove",
+        bfs_pferror(stdout, "Given argument is invalid",
                     __LINE__, __FILE__, BFS_WARNING);
         return -1;
     }
@@ -304,6 +304,7 @@ int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]) {
 
     if(bfs_tree_search(root, fmeta)) {
         BFSNode *walker = bfs_tree_get_child(root, fmeta);
+
         if(walker != walker->father->child) {
             BFSNode *prev = walker->father->child;
             while(prev->next != walker) {
@@ -314,8 +315,17 @@ int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]) {
         else {
             walker->father->child = walker->next;
         }
+
         bfs_tree_free_nodes(walker->child);
+
         free(walker);
+    }
+    else {
+        bfs_pferror(stdout, "File was not found or unable to remove",
+                    __LINE__, __FILE__, BFS_WARNING);
+
+        newline;
+        return -1;
     }
     return 0;
 }
