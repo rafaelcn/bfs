@@ -27,11 +27,10 @@
 
 #include "bfs.h"
 #include "bfs_errors.h"
+#include "bfs_macros.h"
 #include "bfs_string.h"
 #include "bfs_cmdline.h"
 #include "utils/bfs_screen.h"
-
-#define newline printf("\n")
 
 /**
  * @brief Changes the command line working directory.

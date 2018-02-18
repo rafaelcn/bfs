@@ -33,7 +33,7 @@
 #define ANSI_COLOR_BLUE     "\x1b[34;1m"
 #define ANSI_COLOR_RESET   "\x1b[0m"
 
-// ANSI font effects escaping sequences
+#define newline printf("\n")
 
 #endif // __linux__
 

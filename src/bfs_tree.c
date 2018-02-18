@@ -32,8 +32,6 @@
 #include "bfs_errors.h"
 #include "bfs_macros.h"
 
-#define newline printf("\n")
-
 uint32_t bfs_uid_index = 0;
 
 static int check_pointer(void *p) {
