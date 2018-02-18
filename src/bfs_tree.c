@@ -56,8 +56,10 @@ BFSTree *bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]) {
         return EMPTY_TREE;
     }
     else if(check_pointer(*root)) {
-        return EMPTY_NODE;
+        return EMPTY_TREE; // Even though the empty tree macro is being returned here, it is actually an empty node.
     }
+
+
 
     int i, levels = bfs_count_delim(path, '/');
 
@@ -215,9 +217,6 @@ void bfs_tree_print(BFSTree root, char *arg) {
         return;
     }
     else if(root->child == NULL && root->fpermissions == BFS_NODE_IS_DIR) {
-        bfs_pferror(stderr, "Empty directory", __LINE__, __FILE__,
-                    BFS_WARNING);
-        newline;
         return;
     }
 
@@ -257,20 +256,16 @@ void bfs_tree_print(BFSTree root, char *arg) {
         }
         return;
     }
-    else if(strcmp(arg, "-h") == 0) {
-        goto help;
-    }
     else {
-        bfs_pferror(stderr, "Invalid argument", __LINE__, __FILE__,
-                    BFS_WARNING);
-        newline;
-        goto help;
+        if(strcmp(arg, "-h") != 0) {
+            bfs_pferror(stderr, "Invalid argument", __LINE__, __FILE__,
+                        BFS_WARNING);
+            newline;
+        }
+        printf("\nAvailable arguments:\n\n");
+        printf("    -i\tPrints file informations\n");
+        printf("    -h\tPrints this guide\n");
     }
-
-help:
-    printf("\nAvailable arguments:\n\n");
-    printf("    -i\tPrints file informations\n");
-    printf("    -h\tPrints this guide\n");
     
     return;
 }

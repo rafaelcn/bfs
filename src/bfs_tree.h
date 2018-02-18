@@ -30,8 +30,8 @@
 typedef struct bfs_node *BFSTree;
 typedef struct bfs_node  BFSNode;
 
-#define EMPTY_TREE (void *)0
-#define EMPTY_NODE (void *)0
+#define EMPTY_TREE (BFSTree *)0
+#define EMPTY_NODE (BFSNode *)0
 
 extern uint32_t bfs_uid_index;
 

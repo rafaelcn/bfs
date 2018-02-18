@@ -79,7 +79,7 @@ void bfs_cmdline_start(BFSTree *root) {
     while (1) {
         char option[CMDLINE_READ_BUFFER];
 
-        printf(">>> %s:  ", root_path);
+        printf("%s>>> %s:%s  ", ANSI_COLOR_BRIGHT_YELLOW, root_path, ANSI_COLOR_RESET);
         
         fgets(option, CMDLINE_READ_BUFFER, stdin);
 
