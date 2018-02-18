@@ -57,19 +57,15 @@ BFSTree *bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]) {
     }
     else if(check_pointer(*root)) {
         return EMPTY_NODE;
-    }    
-    
-    // 1º: verifica a quantidade de níveis
-    // 2º: percorre a árvore procurando o caminho e o cria se necessário
-    // 3º: se houver arquivo, cria e insere no caminho, porém não permite multiplos arquivos com o mesmo nome
+    }
 
-    int levels = bfs_count_delim(path, '/');
+    int i, levels = bfs_count_delim(path, '/');
 
     char fstring[BFS_MAX_NAME_LENGTH];
 
     BFSNode *walker = *root;
 
-    int i;
+    // Walks through the tree looking for the path and creates if necessary.
     for(i = 1; i <= levels; i++) {
         strcpy(fstring, bfs_strsplit(path, "/", i));
 
@@ -196,20 +192,22 @@ int bfs_tree_search_child(BFSNode *child, char *s) {
     return bfs_tree_search_child(child->next, s);
 }
 
-BFSNode *tmp;
 
 BFSNode *bfs_tree_get_child(BFSNode *root, char *s) {
+    static BFSNode *child;
+
     if(check_pointer(root)) {
         return EMPTY_NODE;
     }
     else if(strcmp(root->fname, s) == 0) {
-        tmp = root;
+        child = root;
     }
     else {
-        bfs_tree_get_child(root->child, s);
         bfs_tree_get_child(root->next, s);
+        bfs_tree_get_child(root->child, s);
     }
-    return tmp;
+
+    return child;
 }
 
 void bfs_tree_print(BFSTree root, char *arg) {
