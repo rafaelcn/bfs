@@ -1,11 +1,23 @@
-Arquivos e Programas/Firefox
-Arquivos e Programas/Chrome
-Arquivos e Programas/Opera
-Meus Documetnos/apresentacao.pptx
-Meus Documentos/relatorio.txt
-Meus Documentos/fontes
-Meus Documentos/fontes/main.c
-Meus Documentos/fontes/main.h
-Meus Documentos/imagens
-Meus Downloads/7zip.exe
-Meus Downloads/t2.tar
+Arquivos e Programas/Firefox/firefox.exe
+Arquivos e Programas/Chrome/chrome.exe
+Arquivos e Programas/Opera/opera.exe
+Arquivos e Programas/PopCorn-Time/popcorn.exe
+Arquivos e Programas/VLC/lib/audio.h
+Arquivos e Programas/VLC/lib/video.h
+Arquivos e Programas/VLC/lib/codec.h
+Arquivos e Programas/VLC/bin/vlc
+Arquivos e Programas/VLC/bin/vlc-audio
+Arquivos e Programas/VLC/bin/vlc-config
+Arquivos e Programas/VLC/bin/vlc-tools
+Arquivos e Programas/VLC/vlc.exe
+Usuario/Padrao/Meus Documentos/apresentacao.pptx
+Usuario/Padrao/Meus Documentos/relatorio.txt
+Usuario/Padrao/Meus Documentos/Backup/04-10.zip
+Usuario/Padrao/Meus Documentos/Fontes
+Usuario/Padrao/Meus Documentos/Fontes/main.c
+Usuario/Padrao/Meus Documentos/Fontes/main.h
+Usuario/Padrao/Meus Documentos/Imagens
+Usuario/Padrao/Meus Downloads/7zip.exe
+Usuario/Padrao/Meus Downloads/t2.tar
+Usuario/Padrao/Meus Downloads/vlc.zip
+Usuario/Padrao/Meus Downloads/popcorntime.tar.gz
