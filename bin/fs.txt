@@ -1,23 +1,23 @@
-Arquivos e Programas/Firefox/firefox.exe
-Arquivos e Programas/Chrome/chrome.exe
-Arquivos e Programas/Opera/opera.exe
-Arquivos e Programas/PopCorn-Time/popcorn.exe
-Arquivos e Programas/VLC/lib/audio.h
-Arquivos e Programas/VLC/lib/video.h
-Arquivos e Programas/VLC/lib/codec.h
-Arquivos e Programas/VLC/bin/vlc
-Arquivos e Programas/VLC/bin/vlc-audio
-Arquivos e Programas/VLC/bin/vlc-config
-Arquivos e Programas/VLC/bin/vlc-tools
-Arquivos e Programas/VLC/vlc.exe
-Usuario/Padrao/Meus Documentos/apresentacao.pptx
-Usuario/Padrao/Meus Documentos/relatorio.txt
-Usuario/Padrao/Meus Documentos/Backup/04-10.zip
-Usuario/Padrao/Meus Documentos/Fontes
-Usuario/Padrao/Meus Documentos/Fontes/main.c
-Usuario/Padrao/Meus Documentos/Fontes/main.h
-Usuario/Padrao/Meus Documentos/Imagens
-Usuario/Padrao/Meus Downloads/7zip.exe
-Usuario/Padrao/Meus Downloads/t2.tar
-Usuario/Padrao/Meus Downloads/vlc.zip
-Usuario/Padrao/Meus Downloads/popcorntime.tar.gz
+Program Files/Firefox/firefox.exe
+Program Files/Chrome/chrome.exe
+Program Files/Opera/opera.exe
+Program Files/PopCorn-Time/popcorn.exe
+Program Files/VLC/lib/audio.h
+Program Files/VLC/lib/video.h
+Program Files/VLC/lib/codec.h
+Program Files/VLC/bin/vlc
+Program Files/VLC/bin/vlc-audio
+Program Files/VLC/bin/vlc-config
+Program Files/VLC/bin/vlc-tools
+Program Files/VLC/vlc.exe
+Users/Default/Documents/Source-Presentation.pptx
+Users/Default/Documents/report.txt
+Users/Default/Documents/Backup/04-10.zip
+Users/Default/Documents/Sources
+Users/Default/Documents/Sources/main.c
+Users/Default/Documents/Sources/main.h
+Users/Default/Documents/Images
+Users/Default/Downloads/7zip.exe
+Users/Default/Downloads/t2.tar
+Users/Default/Downloads/vlc.zip
+Users/Default/Downloads/popcorntime.tar.gz

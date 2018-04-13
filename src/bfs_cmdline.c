@@ -74,12 +74,14 @@ void bfs_cmdline_start(BFSTree *root) {
     int i = 0, j = 0;
     
     // Initialize the working directory path
-    strcat(root_path, bfs_tree->fname);
+     strcat(root_path, bfs_tree->fname);
 
     while (1) {
         char option[CMDLINE_READ_BUFFER];
 
-        printf("%s>>> %s:%s  ", ANSI_COLOR_BRIGHT_YELLOW, root_path, ANSI_COLOR_RESET);
+	printf("%sroot%s: %s%s%s\n", ANSI_COLOR_BRIGHT_YELLOW, ANSI_COLOR_RESET\
+	       , ANSI_COLOR_BLUE, root_path, ANSI_COLOR_RESET);
+        printf("%s$ %s", ANSI_COLOR_BRIGHT_YELLOW,ANSI_COLOR_RESET);
         
         fgets(option, CMDLINE_READ_BUFFER, stdin);
 
@@ -107,14 +109,11 @@ void bfs_cmdline_start(BFSTree *root) {
 
                 bfs_cmdline_cd(root, &bfs_tree, root_path, dir);
             }
-
-            newline;
         }
         else if (strncmp(option, "search", 6) == 0) {
             if (option[7] == '\0') {
                 bfs_pferror(stderr, "Given argument is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
-                newline;
             }
             else {
                 char arg[CMDLINE_READ_BUFFER-5];
@@ -130,14 +129,12 @@ void bfs_cmdline_start(BFSTree *root) {
 
                 bfs_cmdline_search(root, arg);
             }
-
-            newline;
         }
         else if (strncmp(option, "rm", 2) == 0) {
             if (option[3] == '\0') {
                 bfs_pferror(stderr, "Given directory is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
-                newline;
+		newline;
             }
             else {
                 char dir[CMDLINE_READ_BUFFER-2];
@@ -158,8 +155,6 @@ void bfs_cmdline_start(BFSTree *root) {
                     bfs_tree_remove(bfs_tree, dir); 
                 }
             }
-
-            newline;
         }
         else if (strncmp(option, "ls", 2) == 0) {
             if(option[3] != '\0') {
@@ -179,13 +174,11 @@ void bfs_cmdline_start(BFSTree *root) {
             else {
                 bfs_tree_print(bfs_tree, NULL);
             }
-            newline;
         }
         else if (strncmp(option, "mkdir", 5) == 0) {
             if (option[6] == '\0') {
                 bfs_pferror(stderr, "Given argument is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
-                newline;
             }
             else {
                 char arg[CMDLINE_READ_BUFFER-6];
@@ -207,11 +200,8 @@ void bfs_cmdline_start(BFSTree *root) {
                 else {
                     bfs_pferror(stderr, "mkdir command does not create files", 
                                 __LINE__, __FILE__, BFS_WARNING);
-                    newline;
                 }
             }
-            
-            newline;
         }
         else if (strncmp(option, "clear", 5) == 0) {
             bfs_clear_screen();
@@ -236,7 +226,6 @@ void bfs_cmdline_start(BFSTree *root) {
 
             bfs_pferror(stderr, ebuffer, __LINE__, __FILE__, BFS_WARNING);
 
-            newline;
             newline;
         }
     }
@@ -296,8 +285,6 @@ static void bfs_cmdline_search(BFSTree *root, char *arg){
     int i;
 
     if(bfs_tree_search(*root, arg)) {
-        newline;
-
         BFSNode *tmp = bfs_tree_get_child(*root, arg);
         
         char arg_path[BFS_MAX_NODES][BFS_MAX_NAME_LENGTH]; 

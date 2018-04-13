@@ -227,7 +227,6 @@ void bfs_tree_print(BFSTree root, char *arg) {
     root = root->child;
 
     if(arg == NULL) {
-        newline;
         while(root != NULL) {
             if(root->fpermissions == BFS_NODE_IS_DIR) {
                 printf("%s%s%s    ", ANSI_COLOR_BLUE, root->fname,
@@ -243,7 +242,6 @@ void bfs_tree_print(BFSTree root, char *arg) {
         return;
     }
     else if(strcmp(arg, "-i") == 0) {
-        newline;
         printf("Type\tName\t\t\tCreated on\n\n");
 
         while(root != NULL) {
