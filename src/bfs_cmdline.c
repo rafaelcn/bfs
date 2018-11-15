@@ -72,17 +72,18 @@ void bfs_cmdline_start(BFSTree *root) {
 
     // Default indexes
     int i = 0, j = 0;
-    
+
     // Initialize the working directory path
      strcat(root_path, bfs_tree->fname);
 
     while (1) {
         char option[CMDLINE_READ_BUFFER];
 
-	printf("%sroot%s: %s%s%s\n", ANSI_COLOR_BRIGHT_YELLOW, ANSI_COLOR_RESET\
-	       , ANSI_COLOR_BLUE, root_path, ANSI_COLOR_RESET);
+
+        printf("%sroot%s: %s%s%s\n", ANSI_COLOR_BRIGHT_YELLOW, ANSI_COLOR_RESET,
+               ANSI_COLOR_BLUE, root_path, ANSI_COLOR_RESET);
         printf("%s$ %s", ANSI_COLOR_BRIGHT_YELLOW,ANSI_COLOR_RESET);
-        
+
         fgets(option, CMDLINE_READ_BUFFER, stdin);
 
         if (strncmp(option, "cd", 2) == 0) {
@@ -92,7 +93,7 @@ void bfs_cmdline_start(BFSTree *root) {
             }
             else {
                 char dir[CMDLINE_READ_BUFFER-2];
-                
+
                 i = 3;
                 j = 0;
 
@@ -117,7 +118,7 @@ void bfs_cmdline_start(BFSTree *root) {
             }
             else {
                 char arg[CMDLINE_READ_BUFFER-5];
-                
+
                 j = 0;
 
                 for(i = 7; i < CMDLINE_READ_BUFFER; i++) {
@@ -134,11 +135,11 @@ void bfs_cmdline_start(BFSTree *root) {
             if (option[3] == '\0') {
                 bfs_pferror(stderr, "Given directory is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
-		newline;
+                newline;
             }
             else {
                 char dir[CMDLINE_READ_BUFFER-2];
-                
+
                 j = 0;
 
                 for (i = 3; i < CMDLINE_READ_BUFFER; i++) {
@@ -152,7 +153,7 @@ void bfs_cmdline_start(BFSTree *root) {
                     bfs_tree_remove(*root, dir);
                 }
                 else {
-                    bfs_tree_remove(bfs_tree, dir); 
+                    bfs_tree_remove(bfs_tree, dir);
                 }
             }
         }
@@ -193,12 +194,12 @@ void bfs_cmdline_start(BFSTree *root) {
                 }
 
                 arg[j] = '\0';
-                
-                if(bfs_strchr(arg, '.') == -1) {  
+
+                if(bfs_strchr(arg, '.') == -1) {
                     bfs_tree_insert(&bfs_tree, arg);
                 }
                 else {
-                    bfs_pferror(stderr, "mkdir command does not create files", 
+                    bfs_pferror(stderr, "mkdir command does not create files",
                                 __LINE__, __FILE__, BFS_WARNING);
                 }
             }
@@ -212,7 +213,7 @@ void bfs_cmdline_start(BFSTree *root) {
         else if (strncmp(option, "exit", 4) == 0 ||
                  strncmp(option, "quit", 4) == 0) {
             break;
-        } 
+        }
         else if (strncmp(option , "\n", 1) != 0) {
             char ebuffer[BFS_MAX_ERROR_LENGTH];
 
@@ -221,7 +222,7 @@ void bfs_cmdline_start(BFSTree *root) {
                 i++;
             }
             option[i] = '\0';
-            
+
             sprintf(ebuffer, "Given command \"%s\" is invalid", option);
 
             bfs_pferror(stderr, ebuffer, __LINE__, __FILE__, BFS_WARNING);
@@ -233,7 +234,8 @@ void bfs_cmdline_start(BFSTree *root) {
     bfs_tree_free(root);
 }
 
-static void bfs_cmdline_cd(BFSTree *root, BFSTree *wd_root, char *root_path, char *dir) {
+static void bfs_cmdline_cd(BFSTree *root, BFSTree *wd_root, char *root_path,
+                           char *dir) {
     int i;
 
     if(strcmp(dir,"..") == 0) {
@@ -241,7 +243,7 @@ static void bfs_cmdline_cd(BFSTree *root, BFSTree *wd_root, char *root_path, cha
             (*wd_root) = (*wd_root)->father;
 
             int levels = bfs_count_delim(root_path, '/');
-            
+
             char tmp[BFS_PATH_SIZE];
 
             strcpy(tmp, (*root)->fname);
@@ -261,7 +263,7 @@ static void bfs_cmdline_cd(BFSTree *root, BFSTree *wd_root, char *root_path, cha
 
         if((*wd_root)->fpermissions == BFS_NODE_IS_DIR) {
             if(strcmp((*wd_root)->father->fname,"/") != 0) {
-                strcat(root_path, "/");                    
+                strcat(root_path, "/");
             }
 
             strcat(root_path, (*wd_root)->fname);
@@ -286,11 +288,11 @@ static void bfs_cmdline_search(BFSTree *root, char *arg){
 
     if(bfs_tree_search(*root, arg)) {
         BFSNode *tmp = bfs_tree_get_child(*root, arg);
-        
-        char arg_path[BFS_MAX_NODES][BFS_MAX_NAME_LENGTH]; 
+
+        char arg_path[BFS_MAX_NODES][BFS_MAX_NAME_LENGTH];
 
         i = 0;
-            
+
         while(tmp->father != NULL) {
             strcpy(arg_path[i], tmp->fname);
             tmp = tmp->father;
@@ -307,7 +309,7 @@ static void bfs_cmdline_search(BFSTree *root, char *arg){
             }
 
             if(i > 0) {
-                strcat(p, "/");                    
+                strcat(p, "/");
             }
         }
 
