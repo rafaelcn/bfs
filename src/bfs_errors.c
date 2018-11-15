@@ -36,14 +36,14 @@ void bfs_pferror(FILE *stream, const char *s, int line, char *file, int errc) {
 
     switch(errc) {
     case BFS_LOG:
-        sprintf(error, "\n>>> %s | File: %s on line %d.", s, file, line);
+        sprintf(error, ">>> %s | File: %s on line %d.", s, file, line);
         break;
     case BFS_CRITICAL:
-        sprintf(error, "\n%s>>> %s | File: %s on line %d. %s",
+        sprintf(error, "%s>>> %s | File: %s on line %d. %s",
                 ANSI_COLOR_RED, s, file, line, ANSI_COLOR_RESET);
         break;
     case BFS_WARNING:
-        sprintf(error, "\n%s>>> %s | File: %s on line %d. %s",
+        sprintf(error, "%s>>> %s | File: %s on line %d. %s",
                 ANSI_COLOR_YELLOW, s, file, line, ANSI_COLOR_RESET);
         break;
     }
