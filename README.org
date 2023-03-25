@@ -2,7 +2,6 @@
 
 #+AUTHOR: Rafael Campos Nunes \and Mikael Messias
 #+DATE: 06/12/2017
-#+TITLE: BFS - Branch Filesystem
 #+LANGUAGE: bt-br
 
 #+LATEX_HEADER: \usepackage babel[]{babel}
