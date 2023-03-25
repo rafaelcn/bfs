@@ -38,7 +38,7 @@ static int check_pointer(void *p) {
     return p == NULL;
 }
 
-BFSTree *bfs_tree_init() {
+BFSTree *bfs_tree_init(void) {
     BFSTree *root = malloc(sizeof(BFSTree));
 
     if(check_pointer(root)) {
@@ -125,7 +125,16 @@ same given name.", __LINE__, __FILE__,
     return root;
 }
 
-BFSNode *bfs_tree_create_path(char fname[BFS_MAX_NAME_LENGTH]) {
+BFSNode *bfs_tree_create_path(char *fname) {
+    if (strlen(fname) > BFS_MAX_NAME_LENGTH) {
+        bfs_pferror(stderr,
+                    "filename bigger than max name length",
+                    __LINE__,
+                    __FILE__,
+                    BFS_CRITICAL);
+        exit(EXIT_FAILURE);
+    }
+
     BFSNode *node = (BFSNode*) malloc(sizeof(BFSNode));
 
     if(check_pointer(node)) {
@@ -150,7 +159,16 @@ BFSNode *bfs_tree_create_path(char fname[BFS_MAX_NAME_LENGTH]) {
     return node;
 }
 
-BFSNode *bfs_tree_create_file(char fname[BFS_MAX_NAME_LENGTH]) {
+BFSNode *bfs_tree_create_file(char *fname) {
+    if (strlen(fname) > BFS_MAX_NAME_LENGTH) {
+        bfs_pferror(stderr,
+                    "filename bigger than max name length",
+                    __LINE__,
+                    __FILE__,
+                    BFS_CRITICAL);
+        exit(EXIT_FAILURE);
+    }
+
     BFSNode *node = (BFSNode*) malloc(sizeof(BFSNode));
 
     if(check_pointer(node)) {

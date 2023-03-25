@@ -51,7 +51,7 @@ static void bfs_cmdline_search(BFSTree *root, char *arg);
 /**
  * @brief Prints the BFS usage guide.
  */
-static void bfs_cmdline_help();
+static void bfs_cmdline_help(void);
 
 void bfs_cmdline_start(BFSTree *root) {
     bfs_clear_screen();
@@ -326,7 +326,7 @@ static void bfs_cmdline_search(BFSTree *root, char *arg){
 
 
 
-static void bfs_cmdline_help() {
+static void bfs_cmdline_help(void) {
     newline;
     printf("This is the Branch Filesystem command line. Usage:\n");
     newline;

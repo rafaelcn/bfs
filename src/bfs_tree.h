@@ -35,13 +35,13 @@ typedef struct bfs_node  BFSNode;
 
 extern uint32_t bfs_uid_index;
 
-BFSTree *bfs_tree_init();
+BFSTree *bfs_tree_init(void);
 
 BFSTree *bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]);
 
-BFSNode *bfs_tree_create_path(char fname[BFS_MAX_NAME_LENGTH]);
+BFSNode *bfs_tree_create_path(char *fname);
 
-BFSNode *bfs_tree_create_file(char fname[BFS_MAX_NAME_LENGTH]);
+BFSNode *bfs_tree_create_file(char *fname);
 
 int bfs_tree_search(BFSNode *root, char *s);
 
