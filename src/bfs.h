@@ -39,7 +39,7 @@ struct bfs_fs {
 
 typedef struct bfs_fs BFSStruct;
 
-BFSStruct *BFS_Global;
+extern BFSStruct *BFS_Global;
 
 /**
  * The BFS graph can only support a depth of 15 levels with at least
@@ -57,9 +57,9 @@ BFSStruct *BFS_Global;
 
 
 /**
- * @brief
+ * @brief initializes the BFS structure
  */
-void bfs_init();
+void bfs_init(void);
 
 
 /**

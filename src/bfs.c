@@ -29,9 +29,11 @@
 #include "bfs_macros.h"
 #include "bfs_tree.h"
 
-void bfs_init(BFSStruct *fs) {
+BFSStruct *BFS_Global;
+
+void bfs_init(void) {
     // inits the BFS filesystem.
-    BFS_Global = malloc(sizeof(BFS_Global));
+    BFS_Global = malloc(sizeof(BFSStruct));
 
     BFS_Global->bfs_fs = bfs_tree_init();
 }
