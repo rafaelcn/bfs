@@ -27,7 +27,7 @@
 #include <stdio.h>
 
 // The maximum size of an error message.
-#define BFS_MAX_ERROR_LENGTH 512
+#define BFS_MAX_ERROR_LENGTH 2048
 
 // List of possible ~errors~ and their numerical correspondents.
 #define BFS_LOG        0x00
