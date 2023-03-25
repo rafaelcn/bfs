@@ -24,13 +24,6 @@
 #ifndef BFS_SCREEN_H
 #define BFS_SCREEN_H
 
-
-void bfs_clear_screen() {
-#if defined(__linux__) || defined(__unix__) || defined(__APPLE__)
-    system("clear");
-#elif defined(_WIN32) || defined(_WIN64)
-    system("cls");
-#endif
-}
+void bfs_clear_screen(void);
 
 #endif // BFS_SCREEN_H
