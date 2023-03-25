@@ -41,7 +41,7 @@ utilizando o comando /help/ dentro da CLI.
 | cd     | navegar no sistema de arquivos                |
 | rm     | remove uma pasta ou um arquivo                |
 | search | busca um arquivo no sistema de arquivos       |
-| list   | lista todos os arquivos dentro da pasta atual |
+| ls     | lista todos os arquivos dentro da pasta atual |
 | mkdir  | cria uma pasta no sistema de arquivos         |
 | clear  | limpa a CLI                                   |
 | help   | exibe ajuda sobre os comandos                 |

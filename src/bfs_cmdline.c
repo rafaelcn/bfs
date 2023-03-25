@@ -340,7 +340,7 @@ static void bfs_cmdline_help(void) {
     \n\t\t\tname is the same as the given argument.");
     printf("\n - rm <dir>\t\tRemoves recursively a folder and its\
     \n\t\t\tcontent.");
-    printf("\n - list\t\t\tPrints everything inside the current\
+    printf("\n - ls\t\t\tPrints everything inside the current\
     \n\t\t\tfolder.");
     printf("\n - mkdir <arg>\t\tCreates a new folder in the current\
     \n\t\t\tdirectory with the given argument as\
