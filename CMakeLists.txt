@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.8)
+cmake_minimum_required (VERSION 3.2)
 project ("Branch Filesystem")
 
 option(DEBUG "Builds BFS in debug mode (-g -O0)" off)
@@ -31,19 +31,14 @@ elseif (UNIX)
 endif()
 
 set (SRC src/main.c
-  src/bfs_macros.h
   src/bfs_cmdline.c
-  src/bfs_cmdline.h
   src/bfs_string.c
-  src/bfs_string.h
   src/bfs_node.c
-  src/bfs_node.h
   src/bfs_tree.c
   src/bfs_tree.h
   src/bfs_errors.c
-  src/bfs_errors.h
   src/bfs.c
-  src/bfs.h
+  src/utils/bfs_screen.c
   )
 
 add_executable(${EXEC_NAME} ${SRC})
