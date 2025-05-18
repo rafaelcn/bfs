@@ -24,7 +24,7 @@
 #ifndef MACROS_H
 #define MACROS_H
 
-#ifdef __linux__
+#if defined(__linux__) || defined(__mach__)
 
 // ANSI color escaping sequences
 #define ANSI_COLOR_RED     "\x1b[31m"
