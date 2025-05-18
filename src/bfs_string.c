@@ -22,7 +22,7 @@
  */
 
 #include "bfs_string.h"
-#include "bfs_errors.h"
+#include "bfs_print.h"
 
 
 #include <stdlib.h>

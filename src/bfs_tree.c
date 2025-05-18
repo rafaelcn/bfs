@@ -26,10 +26,9 @@
 
 #include "bfs.h"
 #include "bfs_tree.h"
-#include "bfs_errors.h"
+#include "bfs_print.h"
 #include "bfs_node.h"
 #include "bfs_string.h"
-#include "bfs_errors.h"
 #include "bfs_macros.h"
 
 uint32_t bfs_uid_index = 0;
@@ -80,7 +79,7 @@ BFSTree *bfs_tree_insert(BFSTree *root, char path[BFS_PATH_SIZE]) {
                 walker = bfs_tree_get_child(walker, fstring);
             }
             else {
-                bfs_pferror(stderr, "There's already a file with the \
+                bfs_pferror(stderr, "there's already a file with the \
 same given name.", __LINE__, __FILE__,
                             BFS_WARNING);
             }
@@ -138,7 +137,7 @@ BFSNode *bfs_tree_create_path(char *fname) {
     BFSNode *node = (BFSNode*) malloc(sizeof(BFSNode));
 
     if(check_pointer(node)) {
-        bfs_pferror(stderr, "Node allocation failed", __LINE__, __FILE__,
+        bfs_pferror(stderr, "node allocation failed", __LINE__, __FILE__,
                     BFS_CRITICAL);
         exit(EXIT_FAILURE);
     }
@@ -172,7 +171,7 @@ BFSNode *bfs_tree_create_file(char *fname) {
     BFSNode *node = (BFSNode*) malloc(sizeof(BFSNode));
 
     if(check_pointer(node)) {
-        bfs_pferror(stderr, "Node allocation failed", __LINE__, __FILE__,
+        bfs_pferror(stderr, "node allocation failed", __LINE__, __FILE__,
                     BFS_CRITICAL);
         exit(EXIT_FAILURE);
     }
@@ -235,16 +234,16 @@ BFSNode *bfs_tree_get_child(BFSNode *root, char *s) {
 }
 
 void bfs_tree_print(BFSTree root, char *arg) {
-    if(root == NULL) {
+    if (root == NULL) {
         return;
     }
-    else if(root->child == NULL && root->fpermissions == BFS_NODE_IS_DIR) {
+    else if (root->child == NULL && root->fpermissions == BFS_NODE_IS_DIR) {
         return;
     }
 
     root = root->child;
 
-    if(arg == NULL) {
+    if (arg == NULL) {
         while(root != NULL) {
             if(root->fpermissions == BFS_NODE_IS_DIR) {
                 printf("%s%s%s    ", ANSI_COLOR_BLUE, root->fname,
@@ -256,10 +255,10 @@ void bfs_tree_print(BFSTree root, char *arg) {
 
             root = root->next;
         }
-        newline;
+
         return;
     }
-    else if(strcmp(arg, "-i") == 0) {
+    else if (strcmp(arg, "-i") == 0) {
         printf("Type\tName\t\t\tCreated on\n\n");
 
         while(root != NULL) {
@@ -279,9 +278,8 @@ void bfs_tree_print(BFSTree root, char *arg) {
     }
     else {
         if(strcmp(arg, "-h") != 0) {
-            bfs_pferror(stderr, "Invalid argument", __LINE__, __FILE__,
+            bfs_pferror(stderr, "invalid argument", __LINE__, __FILE__,
                         BFS_WARNING);
-            newline;
         }
         printf("\nAvailable arguments:\n\n");
         printf("    -i\tPrints file informations\n");
@@ -306,7 +304,7 @@ static void bfs_tree_free_nodes(BFSNode *node) {
 
 int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]) {
     if (root == NULL) {
-        bfs_pferror(stdout, "Given argument is invalid",
+        bfs_pferror(stdout, "given argument is invalid",
                     __LINE__, __FILE__, BFS_WARNING);
         return -1;
     }
@@ -333,10 +331,9 @@ int bfs_tree_remove(BFSTree root, char path[BFS_PATH_SIZE]) {
         free(walker);
     }
     else {
-        bfs_pferror(stdout, "File was not found or unable to remove",
+        bfs_pferror(stdout, "file was not found or unable to remove",
                     __LINE__, __FILE__, BFS_WARNING);
 
-        newline;
         return -1;
     }
     return 0;

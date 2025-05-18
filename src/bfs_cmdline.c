@@ -26,7 +26,7 @@
 #include <string.h>
 
 #include "bfs.h"
-#include "bfs_errors.h"
+#include "bfs_print.h"
 #include "bfs_macros.h"
 #include "bfs_string.h"
 #include "bfs_cmdline.h"
@@ -62,7 +62,7 @@ void bfs_cmdline_start(BFSTree *root) {
     printf("This is a free open-source software.\n");
     printf("THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND.\n");
     printf("\nType \"help\" to see the available commands.\n");
-    newline;
+
 
     // The current working directory pointer
     BFSTree bfs_tree = *root;
@@ -135,7 +135,6 @@ void bfs_cmdline_start(BFSTree *root) {
             if (option[3] == '\0') {
                 bfs_pferror(stderr, "Given directory is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
-                newline;
             }
             else {
                 char dir[CMDLINE_READ_BUFFER-2];
@@ -226,8 +225,6 @@ void bfs_cmdline_start(BFSTree *root) {
             sprintf(ebuffer, "Given command \"%s\" is invalid", option);
 
             bfs_pferror(stderr, ebuffer, __LINE__, __FILE__, BFS_WARNING);
-
-            newline;
         }
     }
 
@@ -272,14 +269,12 @@ static void bfs_cmdline_cd(BFSTree *root, BFSTree *wd_root, char *root_path,
             bfs_pferror(stderr, "Not a directory", __LINE__, __FILE__,
                     BFS_WARNING);
 
-            newline;
             (*wd_root) = (*wd_root)->father;
         }
     }
     else {
         bfs_pferror(stderr, "Couldn't find the directory", __LINE__,
             __FILE__, BFS_LOG);
-        newline;
     }
 }
 
@@ -319,21 +314,18 @@ static void bfs_cmdline_search(BFSTree *root, char *arg){
     else {
         bfs_pferror(stderr, "Couldn't find the given argument", __LINE__,
             __FILE__, BFS_LOG);
-
-        newline;
     }
 }
 
 
 
 static void bfs_cmdline_help(void) {
-    newline;
     printf("This is the Branch Filesystem command line. Usage:\n");
-    newline;
+
     printf("\t[option]\n\t[option] <arg>\n\t[option] <dir>\n");
-    newline;
-    printf("Available options:");
-    newline;
+
+    printf("available options:");
+
     printf("\n - cd <dir>\t\tChange the working directory of the\
     \n\t\t\tcommand line.");
     printf("\n - search <arg>\t\tSearches for a file or folder whose\
@@ -348,5 +340,4 @@ static void bfs_cmdline_help(void) {
     printf("\n - clear\t\tClears the current screen.");
     printf("\n - help\t\t\tDisplay this help.");
     printf("\n - exit\t\t\tQuits the BFS command line.\n");
-    newline;
 }

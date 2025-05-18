@@ -25,7 +25,7 @@
 
 #include "bfs.h"
 #include "bfs_string.h"
-#include "bfs_errors.h"
+#include "bfs_print.h"
 #include "bfs_macros.h"
 #include "bfs_tree.h"
 
