@@ -40,6 +40,7 @@
 
 #define BFS_PARSER_ERROR 0x20
 
+void bfs_pfinfo(const char *f);
 void bfs_pferror(FILE *stream, const char *s, int line, char *file, int errc);
 
 #endif // BFS_ERRORS_H

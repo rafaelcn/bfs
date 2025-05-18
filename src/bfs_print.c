@@ -21,8 +21,12 @@
  *
  */
 
-#include "bfs_errors.h"
+#include "bfs_print.h"
 #include "bfs_macros.h"
+
+#include <stdio.h>
+
+void bfs_pfinfo(const char *s) {}
 
 void bfs_pferror(FILE *stream, const char *s, int line, char *file, int errc) {
 
@@ -39,15 +43,14 @@ void bfs_pferror(FILE *stream, const char *s, int line, char *file, int errc) {
         sprintf(error, ">>> %s | File: %s on line %d.", s, file, line);
         break;
     case BFS_CRITICAL:
-        sprintf(error, "%s>>> %s | File: %s on line %d. %s",
+        sprintf(error, "%s>>> %s | File: %s on line %d. %s\n",
                 ANSI_COLOR_RED, s, file, line, ANSI_COLOR_RESET);
         break;
     case BFS_WARNING:
-        sprintf(error, "%s>>> %s | File: %s on line %d. %s",
+        sprintf(error, "%s>>> %s | File: %s on line %d. %s\n",
                 ANSI_COLOR_YELLOW, s, file, line, ANSI_COLOR_RESET);
         break;
     }
-
 
     fprintf(stream, error, line, file);
 }
