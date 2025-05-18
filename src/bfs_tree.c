@@ -1,7 +1,7 @@
 /**
  *                Universidade Tecnológica Federal do Paraná
  *
- * Copyright (c) 2017 Rafael Nunes <rafaelnunes@engineer.com>
+ * Copyright (c) 2017 Rafael Nunes <rcamposnunes@outlook.com>
  * Copyright (c) 2017 Mikael Messias <mikaelmessias@outlook.com>
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
