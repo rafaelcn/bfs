@@ -113,7 +113,7 @@ void bfs_cmdline_start(BFSTree *root) {
         }
         else if (strncmp(option, "search", 6) == 0) {
             if (option[7] == '\0') {
-                bfs_pferror(stderr, "Given argument is invalid", __LINE__,
+                bfs_pferror(stderr, "given argument is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
             }
             else {
