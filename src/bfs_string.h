@@ -27,17 +27,19 @@
 #include <wchar.h>
 
 /**
- * @brief Compares two strings.
- * @param s The first string to use in the comparison.
- * @param s_ The second string to use in the comparison.
+ * @brief Compares two strings
+ * @param s The first string to use in the comparison
+ * @param s_ The second string to use in the comparison
+ * @return 0 if they are equal and 1 if they are not
  */
 int bfs_strcmpl(const char *restrict s, const char *restrict s_);
 
 /**
- * @brief Compares n chars from the back of the string.
- * @param s The first string to use in the comparison.
- * @param s_ The second string to use in the comparison.
- * @param n How many characters to compare both strings.
+ * @brief Compares n chars from the back of the string
+ * @param s The first string to use in the comparison
+ * @param s_ The second string to use in the comparison
+ * @param n How many characters to compare both strings
+ * @return 0 if they are equal and 1 if they are not
  */
 int bfs_strncmpl(const char *restrict s, const char *restrict s_, int n);
 
@@ -51,12 +53,12 @@ char *bfs_strsplit(const char *restrict s, const char *restrict delim, int i);
 
 
 /**
- * @brief Searches for the first c character inside the string s.
- * @param s The string used to search the character.
+ * @brief Searches for the first c character inside the string s
+ * @param s The string used to search the character
  * @param c The character to be searched in the string
  * @returns An integer representing the position of the first character c in
  * the string s or, -1 if the character c could not be found.
  */
 int bfs_strchr(const char *s, const char c);
 
-#endif// BFS_STRING_H
+#endif // BFS_STRING_H

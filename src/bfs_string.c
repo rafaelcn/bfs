@@ -24,7 +24,6 @@
 #include "bfs_string.h"
 #include "bfs_print.h"
 
-
 #include <stdlib.h>
 #include <string.h>
 
@@ -56,7 +55,7 @@ char *bfs_strsplit(const char *restrict s, const char *restrict delim,
     size_t ssize = strlen(s);
 
     if (pos <= 0 || pos > (int)ssize) {
-        bfs_pferror(stderr, "Given index is out of bounds", __LINE__,
+        bfs_pferror(stderr, "given index is out of bounds", __LINE__,
                     __FILE__, BFS_STR_ERROR);
         return "";
     }
