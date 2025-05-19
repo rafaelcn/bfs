@@ -308,11 +308,11 @@ static void bfs_cmdline_search(BFSTree *root, char *arg){
             }
         }
 
-        printf("Directory: %s\n", p);
+        printf("directory: %s\n", p);
 
     }
     else {
-        bfs_pferror(stderr, "Couldn't find the given argument", __LINE__,
+        bfs_pferror(stderr, "couldn't find the given argument", __LINE__,
             __FILE__, BFS_LOG);
     }
 }
@@ -321,7 +321,6 @@ static void bfs_cmdline_search(BFSTree *root, char *arg){
 
 static void bfs_cmdline_help(void) {
     printf("This is the Branch Filesystem command line. Usage:\n");
-
     printf("\t[option]\n\t[option] <arg>\n\t[option] <dir>\n");
 
     printf("available options:");

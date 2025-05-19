@@ -40,7 +40,7 @@ void bfs_init(void) {
 
 int bfs_load(FILE* vfs) {
     if (BFS_Global == NULL) {
-        bfs_pferror(stderr, "Initialize the BFS_Global first", __LINE__,
+        bfs_pferror(stderr, "initialize the BFS_Global first", __LINE__,
                     __FILE__, BFS_CRITICAL);
         exit(EXIT_FAILURE);
     }
@@ -57,7 +57,7 @@ int bfs_load(FILE* vfs) {
         if (strlen(path) > BFS_PATH_SIZE) {
             char error_buffer[BFS_MAX_ERROR_LENGTH];
 
-            sprintf(error_buffer, "Path %s read is to big to load in the BFS",
+            sprintf(error_buffer, "path %s read is to big to load in the BFS",
                     path);
 
             bfs_pferror(stderr, error_buffer,
