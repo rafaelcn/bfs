@@ -133,7 +133,7 @@ void bfs_cmdline_start(BFSTree *root) {
         }
         else if (strncmp(option, "rm", 2) == 0) {
             if (option[3] == '\0') {
-                bfs_pferror(stderr, "Given directory is invalid", __LINE__,
+                bfs_pferror(stderr, "given directory is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
             }
             else {
@@ -177,7 +177,7 @@ void bfs_cmdline_start(BFSTree *root) {
         }
         else if (strncmp(option, "mkdir", 5) == 0) {
             if (option[6] == '\0') {
-                bfs_pferror(stderr, "Given argument is invalid", __LINE__,
+                bfs_pferror(stderr, "given argument is invalid", __LINE__,
                     __FILE__, BFS_WARNING);
             }
             else {
@@ -222,7 +222,7 @@ void bfs_cmdline_start(BFSTree *root) {
             }
             option[i] = '\0';
 
-            sprintf(ebuffer, "Given command \"%s\" is invalid", option);
+            sprintf(ebuffer, "given command \"%s\" is invalid", option);
 
             bfs_pferror(stderr, ebuffer, __LINE__, __FILE__, BFS_WARNING);
         }
@@ -266,7 +266,7 @@ static void bfs_cmdline_cd(BFSTree *root, BFSTree *wd_root, char *root_path,
             strcat(root_path, (*wd_root)->fname);
         }
         else {
-            bfs_pferror(stderr, "Not a directory", __LINE__, __FILE__,
+            bfs_pferror(stderr, "not a directory", __LINE__, __FILE__,
                     BFS_WARNING);
 
             (*wd_root) = (*wd_root)->father;
@@ -321,8 +321,7 @@ static void bfs_cmdline_search(BFSTree *root, char *arg){
 
 static void bfs_cmdline_help(void) {
     printf("This is the Branch Filesystem command line. Usage:\n");
-    printf("\t[option]\n\t[option] <arg>\n\t[option] <dir>\n");
-
+    printf("\t[option]\n\t[option] <arg>\n\t[option] <dir>\n\n");
     printf("available options:");
 
     printf("\n - cd <dir>\t\tChange the working directory of the\
