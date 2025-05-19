@@ -27,6 +27,7 @@
 #include <string.h>
 
 #include "bfs.h"
+#include "bfs_print.h"
 #include "bfs_string.h"
 #include "bfs_cmdline.h"
 
@@ -39,25 +40,33 @@ int main(int argc, char **argv) {
         fn = argv[1];
 
         if (bfs_strncmpl(fn, ".txt", 3) == 1) {
-            fprintf(stderr, "VFS describe file has to have a .txt extension");
-            return 1;
+            bfs_pferror(stderr, "VFS (virtual file system) file has to have a .txt extension",
+                        __LINE__, __FILE__, BFS_LOG);
+
+            exit(EXIT_FAILURE);
         }
+    } else {
+        bfs_pferror(stderr, "you have to provide a VFS (virtual file system) file",
+                    __LINE__, __FILE__, BFS_LOG);
+
+        exit(EXIT_FAILURE);
     }
 
     fs = fopen(fn, "r");
 
     if (fs == NULL) {
         char err[255];
-        sprintf(err, "Failed to read file %s", fn);
-        perror(err);
+        sprintf(err, "failed to read file %s", fn);
+
+        bfs_pferror(stderr, err, __LINE__, __FILE__, BFS_CRITICAL);
 
         exit(EXIT_FAILURE);
     }
 
-    // Initializes the structure of the filesystem.
+    // initializes the structure of the filesystem.
     bfs_init();
-    // Load filesystem into memory.
-    // Current layout of the filesystem is still being discussed.
+    // load filesystem into memory.
+    // current layout of the filesystem is still being discussed.
     bfs_load(fs);
 
     bfs_cmdline_start(BFS_Global->bfs_fs);
