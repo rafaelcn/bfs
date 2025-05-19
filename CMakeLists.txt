@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.2)
+cmake_minimum_required (VERSION 3.6)
 project ("Branch Filesystem")
 
 option(DEBUG "Builds BFS in debug mode (-g -O0)" off)
@@ -36,7 +36,7 @@ set (SRC src/main.c
   src/bfs_node.c
   src/bfs_tree.c
   src/bfs_tree.h
-  src/bfs_errors.c
+  src/bfs_print.c
   src/bfs.c
   src/utils/bfs_screen.c
   )
