@@ -39,7 +39,7 @@ void bfs_pferror(FILE *stream, const char *s, int line, char *file, int errc) {
 
     switch(errc) {
     case BFS_LOG:
-        sprintf(error, ">>> %s <%s:%d>", s, file, line);
+        sprintf(error, ">>> %s <%s:%d>\n", s, file, line);
         break;
     case BFS_CRITICAL:
         sprintf(error, "%s>>> %s <%s:%d> %s\n", ANSI_COLOR_RED, s, file,

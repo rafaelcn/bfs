@@ -273,8 +273,8 @@ static void bfs_cmdline_cd(BFSTree *root, BFSTree *wd_root, char *root_path,
         }
     }
     else {
-        bfs_pferror(stderr, "Couldn't find the directory", __LINE__,
-            __FILE__, BFS_LOG);
+        bfs_pferror(stderr, "couldn't find the directory", __LINE__, __FILE__,
+                    BFS_LOG);
     }
 }
 
